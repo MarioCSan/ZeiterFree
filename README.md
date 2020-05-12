@@ -15,7 +15,7 @@ Hacer un fork a un repositorio
 Un fork es una copia de un repositorio que permite la edición del código de un repositorio sin afectar al repositorio original 
 Puede realizarse usando el botón de fork en github.
 
-Comenzando.
+#Comenzando#
 El procedimiento será clonar repositorio ZeiterFree utilizando la rama Main para el código experimental (Aquel que no se ha probado o está en desarrollo). Cuando se realicen las pruebas, funcione y no se encuentre ningún error se podrá realizar un Pull Request a la rama master.
 
 Utilizando el cliente git nos situamos en el directorio en el que se quiera clonar el repositorio, una vez echo se ejecuta: git clone https://github.com/DrunkPsyduck/ZeiterFree.git
