@@ -1,0 +1,53 @@
+[{
+  "_id": {
+    "$oid": "5eba73817cce2f252d480666"
+  },
+  "usuario": "Mongo2",
+  "password": "DB2",
+  "fichajes": [
+    {
+      "fecha": "2020-05-12T10:13:20.147+00:00",
+      "tipo": "entrada",
+      "observaciones": "",
+      "hora": 1320
+    },
+    {
+      "fecha": "2020-05-12T10:17:20.147+00:00",
+      "tipo": "salida",
+      "observaciones": "tengo que volver a casa, me he dejado el gas abierto",
+      "hora": 1720
+    }
+  ]
+},{
+  "_id": {
+    "$oid": "5ebab0a671a48e2158a481e2"
+  },
+  "usuario": "Mongo3",
+  "password": "DB3",
+  "fichajes": [
+    {
+      "fecha": "2020-05-12T10:56:20.147+00:00",
+      "tipo": "entrada",
+      "observaciones": "mucho tráfico",
+      "hora": 1056
+    },
+    {
+      "fecha": "2020-05-12T20:17:20.147+00:00",
+      "tipo": "salida",
+      "observaciones": "",
+      "hora": 2017
+    },
+    {
+      "fecha": "2020-05-13T10:41:26.147+00:00",
+      "tipo": "entrada",
+      "observaciones": "",
+      "hora": 1041
+    },
+    {
+      "fecha": "2020-05-13T18:21:26.147+00:00",
+      "tipo": "salida",
+      "observaciones": "incidencia importante",
+      "hora": 1821
+    }
+  ]
+}]
