@@ -3,7 +3,7 @@ const {
 } = require('mongodb');
 
 // Nombre de bd
-const dbName = 'db.json';
+const dbName = './db.json';
 // Conexión URL (estas corriendo en local :D)
 const url = 'mongodb://localhost:27017';
 

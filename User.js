@@ -4,18 +4,15 @@ const mongoose = require('mongoose');
 const userSchema = new mongoose.Schema({
     nombre: String,
     password: String,
-    fichajes: Array
+    fichajes: [{
+        fecha: Date, 
+        tipo: String, 
+        observaciones: String, 
+        hora: Number }]
 
-});
-
-const fichajesSchema = new mongoose.Schema({
-    fecha: [Date],
-    tipo: [String],
-    observaciones: [String],
-    hora: [Number]
 });
 
 const User = mongoose.model('User', userSchema);
-const Fichajes = mongoose.model('Fichaje', fichajesSchema);
+
 
 module.exports = User;

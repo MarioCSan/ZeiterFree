@@ -24,7 +24,10 @@
   "homepage": "https://github.com/DrunkPsyduck/ZeiterFree#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "bson": "^4.0.4",
+    "core-util-is": "^1.0.2",
     "express": "^4.17.1",
+    "mongodb": "^3.5.7",
     "mongoose": "^5.9.14",
     "nodemon": "^2.0.3"
   }
