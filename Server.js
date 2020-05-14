@@ -1,3 +1,12 @@
+// Llamadas a otros componentes de node
+require('./connection');
+
+
+// configuracion conecction. Pruebas. Faltan modulos. 
+const User = require('./user');
+const user = new User({nombre: 'nombre'}); // Llamadas a variables locales
+user.save(); //guardar
+
 //Load HTTP module
 const http = require("http");
 const hostname = '127.0.0.1';
