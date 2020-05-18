@@ -1,5 +1,5 @@
 // Llamadas a otros componentes de node
-require('./connection');
+require('../connection');
 
 
 // configuracion conecction. Pruebas. Faltan modulos. 
@@ -18,8 +18,7 @@ const server = http.createServer((req, res) => {
     //Set the response HTTP header with HTTP status and Content type
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/plain');
-    res.end('Hola mundo\n');
-
+    res.end('Hola Mundo\n');
 
 // Prueba de usuarios con mongo. Separar en otro archivos
     var fechaDia = new Date();
@@ -27,16 +26,14 @@ const server = http.createServer((req, res) => {
     var minutos = (fechaDia.getMinutes() < 10 ? '0' : '') + fechaDia.getMinutes();
     var horaString = fechaDia.getHours() + '' + minutos;
     var horaNumber = parseInt(horaString);
-
+    console.log('hola')
     const user = new User({
         nombre: 'nombre',
         password: 'pepe',
-        fichajes: [{
+        fichajes: {
             fecha: fechaDia,
-            tipo: "normal",
-            observaciones: '',
             hora: horaNumber
-        }]
+        }
     });
         console.log(user)
     user.save();
