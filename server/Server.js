@@ -1,9 +1,10 @@
 // Llamadas a otros componentes de node
 require('../connection');
+require('./User');
 
 
 // configuracion conecction. Pruebas. Faltan modulos. 
-const User = require('./user');
+const User = require('./User');
 // Llamadas a variables locales
 // user.save(); //guardar
 
@@ -21,22 +22,23 @@ const server = http.createServer((req, res) => {
     res.end('Hola Mundo\n');
 
 // Prueba de usuarios con mongo. Separar en otro archivos
-    var fechaDia = new Date();
-    //Si los minutos son menos que 10 añade  un 0 delatnte
-    var minutos = (fechaDia.getMinutes() < 10 ? '0' : '') + fechaDia.getMinutes();
-    var horaString = fechaDia.getHours() + '' + minutos;
-    var horaNumber = parseInt(horaString);
-    console.log('hola')
-    const user = new User({
-        nombre: 'nombre',
-        password: 'pepe',
-        fichajes: {
-            fecha: fechaDia,
-            hora: horaNumber
-        }
-    });
-        console.log(user)
-    user.save();
+    // var fechaDia = new Date();
+    // //Si los minutos son menos que 10 añade  un 0 delatnte
+    // var minutos = (fechaDia.getMinutes() < 10 ? '0' : '') + fechaDia.getMinutes();
+    // var horaString = fechaDia.getHours() + '' + minutos;
+    // var horaNumber = parseInt(horaString);
+    // console.log('hola')
+    // const user = new User({
+    //     nombre: 'nombre',
+    //     password: 'pepe',
+    //     fichajes: {
+    //         fecha: fechaDia,
+    //         hora: horaNumber
+    //     }
+    // });
+
+    User.test()
+
 });
 
 //listen for request on port 3000, and as a callback function have the port listened on logged
