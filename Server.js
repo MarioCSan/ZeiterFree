@@ -20,6 +20,8 @@ const server = http.createServer((req, res) => {
     res.setHeader('Content-Type', 'text/plain');
     res.end('Hola mundo\n');
 
+
+// Prueba de usuarios con mongo. Separar en otro archivos
     var fechaDia = new Date();
     //Si los minutos son menos que 10 añade  un 0 delatnte
     var minutos = (fechaDia.getMinutes() < 10 ? '0' : '') + fechaDia.getMinutes();
