@@ -23,7 +23,7 @@ MongoClient.connect(url, function (err, db) {
         }]
     }
 
-    //Cada vez que se ejecuta inserta un nuevo usuario
+    //Cada vez que se ejecuta inserta un nuevo usuario 
     // dbo.collection("pruebas").insertOne(user, function (err, res) {
     //     if (err) throw err;
     //     console.log("1 document inserted");
@@ -32,13 +32,13 @@ MongoClient.connect(url, function (err, db) {
 
     //find
 
-    var query = { nombre: 'mongoUser1215' }; //Query para buscar usuario mongoUser1215
-    dbo.collection("pruebas").find(query).toArray(function (err, result) {
-        if (err) throw err;
-        console.log(result);
+    // var query = { nombre: 'mongoUser1215' }; //Query para buscar usuario mongoUser1215
+    // dbo.collection("pruebas").find(query).toArray(function (err, result) {
+    //     if (err) throw err;
+    //     console.log(result);
 
-        db.close();
-    });
+    //     db.close();
+    // });
 
     // dbo.collection("pruebas").find({}, { projection: {nombre: 'mongoUser1215'} }).toArray(function (err, result) {
     //     if (err) throw err;
