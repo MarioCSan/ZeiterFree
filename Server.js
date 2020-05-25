@@ -48,7 +48,7 @@ app.get('/index', (req, res) => {
 
         var fechaDia = new Date();
         var minutos = (fechaDia.getMinutes() < 10 ? '0' : '') + fechaDia.getMinutes();
-        var horaString = fechaDia.getHours() + '' + minutos;
+        var horaString = fechaDia.getHours() + '' + minutos;bbb
         var horaNumber = parseInt(horaString);
         var entrada = {
             nombre: 'pepe',
