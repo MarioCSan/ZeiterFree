@@ -41,11 +41,17 @@ module.exports = (app, passport) => {
     });
 
     //Update
-   app.get('/update', isLoggedIn, (req, res) => {
-       res.render('update', {
-           user: req.user
-       });
-   });
+    app.get('/update', isLoggedIn, (req, res) => {
+        res.render('update', {
+            user: req.user
+        });
+    });
+
+     app.post('/update', passport.authenticate('update', {
+         successRedirect: '/profile',
+         failureRedirect: '/update',
+         failureFlash: true
+     }));
 
     function isLoggedIn(req, res, next) {
         if (req.isAuthenticated()) {

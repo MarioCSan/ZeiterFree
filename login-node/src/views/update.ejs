@@ -30,7 +30,7 @@
                         <h3 class="card-title">
                             <span class="fa fa-user"></span> <%= user.name %></h3>
 
-                        <form action="/signup" method="post">
+                        <form action="/update" method="post">
                             <div class="form-group">
                                 <label for="email">Correo electrónico:</label>
                                 <input type="email" name="email" class="form-control">
@@ -44,16 +44,18 @@
 
                             <!-- Nueva contraseña -->
                             <div class="form-group">
-                                <label for="password">Contraseña antigua:</label>
-                                <input type="password" name="newPassword" class="form-control">
+                                <label for="password">nueva contraseña:</label>
+                                <input type="password" id='newPassword' name="newPassword"
+                                    class="form-control">
                             </div>
 
                             <!-- confirmar contraseña -->
                             <div class="form-group">
-                                <label for="password">Contraseña antigua:</label>
-                                <input type="password" name="confirmPassword" class="form-control">
+                                <label for="password">Confirma la contraseña:</label>
+                                <input type="password" id="confirmPassword"  name="confirmPassword"
+                                    class="form-control">
                             </div>
-                            <input type="submit" class="btn btn-warning btn-xs" value="Enviar">
+                            <input type="submit" class="btn btn-warning btn-xs" value="actualizar">
                         </form>
 
                         <a href='/profile' class='btn btn-info btn-xs'>Volver atras</a>
@@ -64,5 +66,11 @@
 
     </div>
 </body>
+<script>
+    function validar(){
+        var nueva = document.getElementById('newPassword');
+        console.log(nueva)
+    }
+</script>
 
 </html>
