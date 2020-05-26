@@ -1,3 +1,4 @@
+const User = require('../app/models/user');
 module.exports = (app, passport) => {
 
     app.get('/', (req, res) => {
@@ -47,11 +48,32 @@ module.exports = (app, passport) => {
         });
     });
 
-     app.post('/update', passport.authenticate('update', {
-         successRedirect: '/profile',
-         failureRedirect: '/update',
-         failureFlash: true
-     }));
+
+    app.post("/update", (req, res) => {
+        var newPassword = req.body.newPassword;
+        var id = req.user.id;
+        console.log(id)
+        console.log(newPassword)
+        User.findOneAndUpdate({'_id': id}, {$set: {'password': newPassword}},
+        function (err, doc){
+            if (err) {
+                console.log("update document error");
+            } else {
+                res.redirect('/profile');
+                console.log(doc);
+            }
+        });
+    });
+
+    app.param('id', function (req, res, next, id) {
+        user.findById(id, function (err, docs) {
+            if (err) res.json(err);
+            else {
+                req.userId = docs;
+                next();
+            }
+        });
+    });
 
     function isLoggedIn(req, res, next) {
         if (req.isAuthenticated()) {

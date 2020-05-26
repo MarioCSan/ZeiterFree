@@ -36,4 +36,11 @@ userSchema.methods.validatePassword = function (password) {
     return bcrypt.compareSync(password, this.local.password);
 };
 
+
+//modificar la contraseña
+
+userSchema.methods.updatePassword = function (password){
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+}
+
 module.exports = mongoose.model('User', userSchema);

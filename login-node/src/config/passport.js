@@ -67,50 +67,29 @@ module.exports = function (passport) {
         }));
 
     //update
-
-    function validaPass(newPassword, confirmPassword) {
-        //comprueba que se ha introducido bien la contraseña
-        return iguales = newPassword === confirmPassword ? true : false;
-    }
-
-    passport.use('update', new LocalStrategy({
-            email: 'email',
-            oldPassword: 'oldPassword',
-            newPassword: 'newPassword',
-            confirmPassword: 'confirmPassword',
-            passReqToCallback: true
-        },
-        function (req, email, oldPassword, newPassword, confirmPassword, done) {
-            User.findOne({
-                'local.email': email
-            }, function (err, user) {
-                if (err) {
-                    return done(err);
-                }
-                var updateUser = new User();
-                if (user) {
-                    var passwordConfirm = validaPass(newPassword, confirmPassword);
-                    if (email === '') {
-                        //Actualizar la contraseña solo
-                        if (passwordConfirm) {
-                            updateUser.local.password = updateUser.generateHash(newPassword);
-                           
-                        } else {
-                            return done(null, false, req.flash('Las contraseñas no coinciden.'));
-                        }
-                    } else {
-                        // Actualizar todo
-                        if (passwordConfirm) {
-                            updateUser.local.email = email;
-                            updateUser.local.password = updateUser.generateHash(newPassword);
-                            
-                        } else {
-                            return done(null, false, req.flash('updateMessage', 'Las contraseñas no coinciden.'));
-                        }
-                    }
-
-                }
-            })
-        }));
-
+   passport.use('local-signup', new LocalStrategy({
+           usernameField: 'email',
+           passwordField: 'newPassword',
+           passReqToCallback: true
+       },
+       function (req, email, password, done) {
+           User.findOne({
+               '_id': req.user.id
+           }, function (err, user) {
+               if (err) {
+                   return done(err);
+               }
+               if (!user) {
+                   var user = new User();
+                   user.local.password = password;
+                   user.local.password = user.generateHash(password);
+                   user.save(function (err) {
+                       if (err) {
+                           throw err;
+                       }
+                       return done(null, user);
+                   });
+               }
+           })
+       }));
 }
