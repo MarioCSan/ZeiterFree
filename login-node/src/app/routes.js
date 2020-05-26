@@ -1,4 +1,5 @@
 const User = require('../app/models/user');
+const bcrypt = require('bcrypt-nodejs');
 module.exports = (app, passport) => {
 
     app.get('/', (req, res) => {
@@ -51,10 +52,15 @@ module.exports = (app, passport) => {
 
     app.post("/update", (req, res) => {
         var newPassword = req.body.newPassword;
+        var encryptedPassword = encriptado(newPassword);
+        console.log(newPassword);
+        
+
+
         var id = req.user.id;
         console.log(id)
         console.log(newPassword)
-        User.update({'_id': id}, {$set: {'local.password': newPassword}},
+        User.update({'_id': id}, {$set: {'local.password': encryptedPassword}},
         {returnNewDocument: true},
         function (err, doc){
             if (err) {
@@ -75,6 +81,10 @@ module.exports = (app, passport) => {
             }
         });
     });
+
+    function encriptado(password){
+        return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+    }
 
     function isLoggedIn(req, res, next) {
         if (req.isAuthenticated()) {
