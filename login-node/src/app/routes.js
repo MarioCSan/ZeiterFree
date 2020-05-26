@@ -54,7 +54,8 @@ module.exports = (app, passport) => {
         var id = req.user.id;
         console.log(id)
         console.log(newPassword)
-        User.findOneAndUpdate({'_id': id}, {$set: {'password': newPassword}},
+        User.update({'_id': id}, {$set: {'local.password': newPassword}},
+        {returnNewDocument: true},
         function (err, doc){
             if (err) {
                 console.log("update document error");
