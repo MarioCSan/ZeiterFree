@@ -30,6 +30,7 @@
                         <h3 class="card-title">
                             <span class="fa fa-user"></span> <%= user.name %></h3>
 
+
                         <form action="/update" method="post" onsubmit="return validar()">
                             <!-- <div class="form-group">
                                 <label for="email">Correo electrónico:</label>
@@ -39,7 +40,7 @@
                             <!-- Contraseña antigua -->
                             <div class="form-group">
                                 <label for="password">Contraseña antigua:</label>
-                                <input type="password" name="oldPassword" class="form-control">
+                                <input type="password" id="oldPassword" name="oldPassword" class="form-control">
                             </div>
 
                             <!-- Nueva contraseña -->

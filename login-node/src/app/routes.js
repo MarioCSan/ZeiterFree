@@ -52,24 +52,37 @@ module.exports = (app, passport) => {
 
     app.post("/update", (req, res) => {
         var newPassword = req.body.newPassword;
-        var encryptedPassword = encriptado(newPassword);
-        console.log(newPassword);
+        var oldPassword = req.body.oldPassword;
+        var confirmPassword = req.body.confirmPassword;
         
+        console.log(newPassword);
+
+        if (oldPassword === '' && newPassword === '' && confirmPassword === '') {
+            console.log('campos vacios')
+        } else if (newPassword === confirmPassword) {
+            //Se encripta newPassword
+            var encryptedPassword = encriptado(newPassword);
+            var id = req.user.id;
+            User.update({
+                    '_id': id
+                }, {
+                    $set: {
+                        'local.password': encryptedPassword
+                    }
+                }, {
+                    returnNewDocument: true
+                },
+                function (err, doc) {
+                    if (err) {
+                        res.redirect('/update');
+                    } else {
+                        res.redirect('/profile');
+                        console.log(doc);
+                    }
+                });
+        }
 
 
-        var id = req.user.id;
-        console.log(id)
-        console.log(newPassword)
-        User.update({'_id': id}, {$set: {'local.password': encryptedPassword}},
-        {returnNewDocument: true},
-        function (err, doc){
-            if (err) {
-                console.log("update document error");
-            } else {
-                res.redirect('/profile');
-                console.log(doc);
-            }
-        });
     });
 
     app.param('id', function (req, res, next, id) {
@@ -82,7 +95,7 @@ module.exports = (app, passport) => {
         });
     });
 
-    function encriptado(password){
+    function encriptado(password) {
         return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
     }
 
