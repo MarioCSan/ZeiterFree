@@ -77,12 +77,6 @@ module.exports = (app, passport) => {
         }
     });
 
-    app.get('/delete', isLoggedIn, (req, res) => {
-         res.render('delete', {
-             user: req.user
-         });
-    })
-
     app.param('id', function (req, res, next, id) {
         user.findById(id, function (err, docs) {
             if (err) res.json(err);
