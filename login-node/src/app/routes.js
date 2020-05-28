@@ -50,28 +50,20 @@ module.exports = (app, passport) => {
     });
 
 
-    app.post("/update", (req, res) => {
+    app.post("/update", isLoggedIn, (req, res) => {
         var newPassword = req.body.newPassword;
-        var oldPassword = req.body.oldPassword;
         var confirmPassword = req.body.confirmPassword;
         
-        console.log(newPassword);
-
-        if (oldPassword === '' && newPassword === '' && confirmPassword === '') {
+        if (newPassword === '' && confirmPassword === '') {
             console.log('campos vacios')
+            res.redirect('update');
         } else if (newPassword === confirmPassword) {
             //Se encripta newPassword
             var encryptedPassword = encriptado(newPassword);
             var id = req.user.id;
-            User.update({
-                    '_id': id
-                }, {
-                    $set: {
-                        'local.password': encryptedPassword
-                    }
-                }, {
-                    returnNewDocument: true
-                },
+            User.update({'_id': id}, 
+            {$set: {'local.password': encryptedPassword}
+                }, {returnNewDocument: true},
                 function (err, doc) {
                     if (err) {
                         res.redirect('/update');
@@ -80,10 +72,16 @@ module.exports = (app, passport) => {
                         console.log(doc);
                     }
                 });
+        } else{
+            console.log ('algo esta mal')
         }
-
-
     });
+
+    app.get('/delete', isLoggedIn, (req, res) => {
+         res.render('delete', {
+             user: req.user
+         });
+    })
 
     app.param('id', function (req, res, next, id) {
         user.findById(id, function (err, docs) {
@@ -97,6 +95,15 @@ module.exports = (app, passport) => {
 
     function encriptado(password) {
         return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+    }
+
+    function getPassword(password) {
+        
+        let resultado = User.findOne({
+            'local.password': password
+        }).exec(function (err, pass) {
+           return pass;
+        });
     }
 
     function isLoggedIn(req, res, next) {

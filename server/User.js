@@ -60,7 +60,7 @@ module.exports = {
             //Si los minutos son menos que 10 añade  un 0 delatnte
             var minutos = (fechaDia.getMinutes() < 10 ? '0' : '') + fechaDia.getMinutes();
             var horaString = fechaDia.getHours() + '' + minutos;
-            var horaNumber = parseInt(horaString);
+            var horaString = parseInt(horaString);
             console.log('hola')
             var user = ({
                 nombre: 'nombre',
