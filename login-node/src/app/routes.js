@@ -53,7 +53,7 @@ module.exports = (app, passport) => {
     app.post("/update", isLoggedIn, (req, res) => {
         var newPassword = req.body.newPassword;
         var confirmPassword = req.body.confirmPassword;
-        
+
         if (newPassword === '' && confirmPassword === '') {
             console.log('campos vacios')
             res.redirect('update');
@@ -61,9 +61,15 @@ module.exports = (app, passport) => {
             //Se encripta newPassword
             var encryptedPassword = encriptado(newPassword);
             var id = req.user.id;
-            User.update({'_id': id}, 
-            {$set: {'local.password': encryptedPassword}
-                }, {returnNewDocument: true},
+            User.update({
+                    '_id': id
+                }, {
+                    $set: {
+                        'local.password': encryptedPassword
+                    }
+                }, {
+                    returnNewDocument: true
+                },
                 function (err, doc) {
                     if (err) {
                         res.redirect('/update');
@@ -72,8 +78,28 @@ module.exports = (app, passport) => {
                         console.log(doc);
                     }
                 });
-        } else{
-            console.log ('algo esta mal')
+        } else {
+            console.log('algo esta mal')
+        }
+    });
+
+    //delete
+    app.get('/delete', isLoggedIn, (req, res) => {
+        res.render('delete', {
+            user: req.user
+        });
+    });
+
+
+    app.post("/delete", isLoggedIn, (req, res) => {
+        // Aqui ira el metodo de borrado del usuario. Se necesita introducir el email correctamente
+        var email = req.body.email;
+
+        if (email!=''){
+            User.findByIdAndDelete({'_id': req.user.id}, (err, result) => {
+                if (err) console.log(err);
+                else console.log(result)
+            })
         }
     });
 
@@ -92,11 +118,11 @@ module.exports = (app, passport) => {
     }
 
     function getPassword(password) {
-        
+
         let resultado = User.findOne({
             'local.password': password
         }).exec(function (err, pass) {
-           return pass;
+            return pass;
         });
     }
 
