@@ -96,10 +96,13 @@ module.exports = (app, passport) => {
         var email = req.body.email;
 
         if (email!=''){
-            User.findByIdAndDelete({'_id': req.user.id}, (err, result) => {
+            User.findOneAndDelete({'local.email': email}, (err, result) => {
                 if (err) console.log(err);
                 else console.log(result)
             })
+            res.redirect('/');
+        } else {
+            console.log('whoops')
         }
     });
 
