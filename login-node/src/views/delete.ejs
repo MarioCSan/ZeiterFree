@@ -28,21 +28,25 @@
                 <div class="card">
                     <div class="card-body">
                         <h3 class="card-title">
-                              <% if (message && message.length > 0) { %>
-                              <div class="alert alert-danger">
-                                  <%= message %>
-                              </div>
-                              <% } %>
                             <span class="fa fa-user">
-                                Si borra su cuenta no se podrá recuperar la información
+                                Eliminar su cuenta
                             </span> </h3>
+                        <div class="alert alert-danger">
+                            Si borra su cuenta no se podrá recuperar la información
+                        </div>
+
+                        <% if (message && message.length > 0) { %>
+                        <div class="alert alert-danger">
+                            <%= message %>
+                        </div>
+                        <% } %>
 
                         <form action="/delete" method="post">
                             <div class="form-group">
                                 <label for="email">Introduzca su email para borrar su cuenta:</label>
                                 <input type="email" id="email" name="email" class="form-control" required>
                             </div>
-                            <input type="submit" class="btn btn-danger btn-xs" value="borrar">
+                            <input type="submit" class="btn btn-danger btn-xs" value="Borrar">
                         </form>
 
                         <a href='/profile' class='btn btn-info btn-xs'>Volver</a>

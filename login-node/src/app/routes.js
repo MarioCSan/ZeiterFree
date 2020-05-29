@@ -102,24 +102,22 @@ module.exports = (app, passport) => {
     app.post("/delete", isLoggedIn, (req, res) => {
         // Aqui ira el metodo de borrado del usuario. Se necesita introducir el email correctamente
         var email = req.body.email;
-        if (email != '') {
+        if (email != '' && email === req.user.email) {
             User.findOneAndDelete({
                 'local.email': email
             }, (err, result) => {
                 if (err) {
                     console.log(err);
-                } else if (result == null) {
+                } else if (result != null) {
                     console.log(result)
-                    req.flash('message', 'El email no es correcto')
-                    res.redirect('/delete');
-                } else {
                     req.flash('message', 'Cuenta eliminada')
-                    res.redirect('/');
-                }
+                    res.redirect('//');
+                } 
             })
 
         } else {
-            console.log('whoops')
+            req.flash('message', 'El email no es el mismo que se introdujo para registrarse')
+            res.redirect('/delete');
         }
     });
 
