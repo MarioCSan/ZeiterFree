@@ -20,6 +20,7 @@ mongoose.connect(url, {
 require('./config/passport')(passport);
 
 // settings
+app.use(flash());
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -35,7 +36,7 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(flash());
+
 
 
 //routes

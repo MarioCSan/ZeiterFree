@@ -1,6 +1,10 @@
 const User = require('../app/models/user');
 const bcrypt = require('bcrypt-nodejs');
 module.exports = (app, passport) => {
+    app.use(function (req, res, next) {
+        res.locals.message = req.flash('message');
+        next();
+    });
 
     app.get('/', (req, res) => {
         res.render('index')
@@ -56,7 +60,8 @@ module.exports = (app, passport) => {
 
         if (newPassword === '' && confirmPassword === '') {
             console.log('campos vacios')
-            res.redirect('update');
+             req.flash('message', 'Las contraseñas no pueden estar vacías');
+            res.redirect('/update');
         } else if (newPassword === confirmPassword) {
             //Se encripta newPassword
             var encryptedPassword = encriptado(newPassword);
@@ -72,14 +77,17 @@ module.exports = (app, passport) => {
                 },
                 function (err, doc) {
                     if (err) {
-                        res.redirect('/update');
+                       
                     } else {
+                        req.flash('message', 'Contraseña actualizada')
                         res.redirect('/profile');
                         console.log(doc);
                     }
                 });
         } else {
             console.log('algo esta mal')
+             req.flash('message', 'Las contraseñas no son iguales')
+             res.redirect('/update');
         }
     });
 
@@ -94,13 +102,22 @@ module.exports = (app, passport) => {
     app.post("/delete", isLoggedIn, (req, res) => {
         // Aqui ira el metodo de borrado del usuario. Se necesita introducir el email correctamente
         var email = req.body.email;
-
-        if (email!=''){
-            User.findOneAndDelete({'local.email': email}, (err, result) => {
-                if (err) console.log(err);
-                else console.log(result)
+        if (email != '') {
+            User.findOneAndDelete({
+                'local.email': email
+            }, (err, result) => {
+                if (err) {
+                    console.log(err);
+                } else if (result == null) {
+                    console.log(result)
+                    req.flash('message', 'El email no es correcto')
+                    res.redirect('/delete');
+                } else {
+                    req.flash('message', 'Cuenta eliminada')
+                    res.redirect('/');
+                }
             })
-            res.redirect('/');
+
         } else {
             console.log('whoops')
         }

@@ -21,6 +21,11 @@
                 <div class="col-sm-6">
                     <div class="card">
                         <div class="card-body">
+                                 <% if (message && message.length > 0) { %>
+                                 <div class="alert alert-success">
+                                     <%= message %>
+                                 </div>
+                                 <% } %>
                             <h3 class="card-title">
                                 <span class="fa fa-user"></span> Datos del usuario:
                             </h3>
@@ -28,10 +33,10 @@
                                 <strong>id</strong>: <%= user._id %><br/>
                                 <strong>email</strong>: <%= user.local.email %><br/>
                                 <strong>password</strong>: <%= user.local.password %>
-                            </p>
-                            <a href='/delete' class='btn btn-info'>delete</a>
-                            <a href="/logout" class="btn btn-info">Salir</a>
+                            </p>                            
+                            <a href="/logout" class="btn btn-warning">Salir</a>
                             <a href='/update' class='btn btn-info'>update</a>
+                            <a href='/delete' class='btn btn-info'>delete</a>
                         </div>
                     </div>
                 </div>

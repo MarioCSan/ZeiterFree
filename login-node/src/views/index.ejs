@@ -12,6 +12,11 @@
     <body>
         <div class="container">
             <div class="card text-center mt-5">
+                     <% if (message && message.length > 0) { %>
+                     <div class="alert alert-danger">
+                         <%= message %>
+                     </div>
+                     <% } %>
                 <div class="card-body">
                     <h1><span class="fa fa-lock"></span> Accede o Regístrate</h1>
                     <a href="/login" class="btn btn-ligth btn-lg">
