@@ -1,5 +1,8 @@
 const User = require('../app/models/user');
 const bcrypt = require('bcrypt-nodejs');
+const moment = require('moment');
+const json2csv = require('json2csv');
+const fs = require('fs');
 module.exports = (app, passport) => {
     app.use(function (req, res, next) {
         res.locals.message = req.flash('message');
@@ -60,7 +63,7 @@ module.exports = (app, passport) => {
 
         if (newPassword === '' && confirmPassword === '') {
             console.log('campos vacios')
-             req.flash('message', 'Las contraseñas no pueden estar vacías');
+            req.flash('message', 'Las contraseñas no pueden estar vacías');
             res.redirect('/update');
         } else if (newPassword === confirmPassword) {
             //Se encripta newPassword
@@ -77,7 +80,7 @@ module.exports = (app, passport) => {
                 },
                 function (err, doc) {
                     if (err) {
-                       
+
                     } else {
                         req.flash('message', 'Contraseña actualizada')
                         res.redirect('/profile');
@@ -85,8 +88,8 @@ module.exports = (app, passport) => {
                     }
                 });
         } else {
-             req.flash('message', 'Las contraseñas no son iguales')
-             res.redirect('/update');
+            req.flash('message', 'Las contraseñas no son iguales')
+            res.redirect('/update');
         }
     });
 
@@ -102,7 +105,30 @@ module.exports = (app, passport) => {
         // Aqui ira el metodo de borrado del usuario. Se necesita introducir el email correctamente
         var email = req.body.email;
 
-        if (email != '' && email === req.user.email) {
+        console.log(req.user.local.email)
+        if (email != '' && email === req.user.local.email) {
+
+            User.findById({
+                '_id': req.user.id
+            }, (err, result) => {
+                if (err) {
+                    console.log(err);
+                } else if (result != null) {
+                    //   var csvParser = json2csv({ header: true });
+                    let csv;
+                    var fields = ['email:' + req.user.local.email, 'password' + req.user.local.email];
+                    try {
+                        csv = json2csv.parse(User, { fields });
+                    } catch (err){
+                        console.log(err);
+                    }
+                    fs.writeFile('export' + email +'.csv',csv, function (err){
+                        if (err) throw err;
+                        console.log('saved')
+                    });
+                }
+            })
+
             User.findOneAndDelete({
                 'local.email': email
             }, (err, result) => {
@@ -112,7 +138,7 @@ module.exports = (app, passport) => {
                     console.log(result)
                     req.flash('message', 'Cuenta eliminada')
                     res.redirect('/');
-                } 
+                }
             })
 
         } else {
