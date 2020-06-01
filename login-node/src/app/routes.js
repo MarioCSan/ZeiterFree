@@ -85,7 +85,6 @@ module.exports = (app, passport) => {
                     }
                 });
         } else {
-            console.log('algo esta mal')
              req.flash('message', 'Las contraseñas no son iguales')
              res.redirect('/update');
         }
@@ -102,6 +101,7 @@ module.exports = (app, passport) => {
     app.post("/delete", isLoggedIn, (req, res) => {
         // Aqui ira el metodo de borrado del usuario. Se necesita introducir el email correctamente
         var email = req.body.email;
+
         if (email != '' && email === req.user.email) {
             User.findOneAndDelete({
                 'local.email': email
@@ -111,7 +111,7 @@ module.exports = (app, passport) => {
                 } else if (result != null) {
                     console.log(result)
                     req.flash('message', 'Cuenta eliminada')
-                    res.redirect('//');
+                    res.redirect('/');
                 } 
             })
 
@@ -134,6 +134,11 @@ module.exports = (app, passport) => {
     function encriptado(password) {
         return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
     }
+
+    // function getCsv(userId){
+    //     let user = user.findById({'_id': userID});
+    //     let csvStream = string
+    // }
 
     function getPassword(password) {
 
