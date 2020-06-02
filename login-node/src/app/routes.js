@@ -131,10 +131,9 @@ module.exports = (app, passport) => {
 
                         res.setHeader('Content-disposition', 'attachment; filename=' + file);
                         res.set('Content-Type', 'text/csv');
-                        // res.attachment(file);
-                        //res.status(200).send('csv');
-                        res.download(csv);
-                        res.redirect('/')
+                        //res.attachment(file);
+                        res.status(200).send('csv');
+                        
                     });
                 }
             })
