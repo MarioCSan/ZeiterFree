@@ -105,10 +105,9 @@ module.exports = (app, passport) => {
         // Aqui ira el metodo de borrado del usuario. Se necesita introducir el email correctamente
         var email = req.body.email;
 
-        console.log(req.user.local.email)
         if (email != '' && email === req.user.local.email) {
 
-            User.findById({
+            User.findOneAndDelete({
                 '_id': req.user.id
             }, (err, result) => {
                 if (err) {
@@ -116,28 +115,27 @@ module.exports = (app, passport) => {
                 } else if (result != null) {
                     //   var csvParser = json2csv({ header: true });
                     let csv;
-                    var fields = ['email:' + req.user.local.email, 'password' + req.user.local.email];
+                    var fields = ['email:' + req.user.local.email, 'password: ' + req.user.local.password];
                     try {
-                        csv = json2csv.parse(User, { fields });
-                    } catch (err){
+                        csv = json2csv.parse(User, {
+                            fields
+                        });
+                    } catch (err) {
                         console.log(err);
                     }
-                    fs.writeFile('export' + email +'.csv',csv, function (err){
-                        if (err) throw err;
-                        console.log('saved')
-                    });
-                }
-            })
 
-            User.findOneAndDelete({
-                'local.email': email
-            }, (err, result) => {
-                if (err) {
-                    console.log(err);
-                } else if (result != null) {
-                    console.log(result)
-                    req.flash('message', 'Cuenta eliminada')
-                    res.redirect('/');
+                    fs.writeFile('export' + email + '.csv', csv, function (err) {
+                        if (err) throw err;
+                        var file = 'export.csv';
+                        var path = '../';
+
+                        res.setHeader('Content-disposition', 'attachment; filename=' + file);
+                        res.set('Content-Type', 'text/csv');
+                        // res.attachment(file);
+                        //res.status(200).send('csv');
+                        res.download(csv);
+                        res.redirect('/')
+                    });
                 }
             })
 

@@ -40,13 +40,13 @@
                             <%= message %>
                         </div>
                         <% } %>
-
+                        <p>Le informamos que al borrar su cuenta se le descargara un archivo con sus datos. Por motivos legales debe conservar este archivo X años</p>
                         <form action="/delete" method="post">
                             <div class="form-group">
                                 <label for="email">Introduzca su email para borrar su cuenta:</label>
                                 <input type="email" id="email" name="email" class="form-control" required>
                             </div>
-                            <input type="submit" class="btn btn-danger btn-xs" value="Borrar">
+                            <input type="submit" class="btn btn-danger btn-xs" value="Borrar" onclick='redirect()'>
                         </form>
 
                         <a href='/profile' class='btn btn-info btn-xs'>Volver</a>
@@ -64,6 +64,10 @@
         var confirmar = document.getElementById('confirmPassword').value;
         nueva == confirmar && old != '' ? true : alert('rellena los campos');
 
+    }
+    function redirect(){
+        console.log('heil')
+        window.location.href ='127.0.0.1:3000';
     }
 </script>
 
