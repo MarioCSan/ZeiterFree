@@ -99,15 +99,36 @@ module.exports = (app, passport) => {
             user: req.user
         });
     });
-
-
     app.post("/delete", isLoggedIn, (req, res) => {
+        // Aqui ira el metodo de borrado del usuario. Se necesita introducir el email correctamente
+        var email = req.body.emailHidden;
+
+        if (email != '' && email === req.user.local.email) {
+            User.findOneAndDelete({
+                'local.email': email
+            }, (err, result) => {
+                if (err) {
+                    console.log(err);
+                } else if (result != null) {
+                    console.log(result)
+                    req.flash('message', 'Cuenta eliminada')
+                    res.redirect('/');
+                }
+            })
+        } else {
+            req.flash('message', 'El email no es el mismo que se introdujo para registrarse')
+            res.redirect('/delete');
+        }
+    });
+
+
+    app.post("/descarga", isLoggedIn, (req, res) => {
         // Aqui ira el metodo de borrado del usuario. Se necesita introducir el email correctamente
         var email = req.body.email;
 
         if (email != '' && email === req.user.local.email) {
 
-            User.findOneAndDelete({
+            User.findOne({
                 '_id': req.user.id
             }, (err, result) => {
                 if (err) {
@@ -127,13 +148,13 @@ module.exports = (app, passport) => {
                     fs.writeFile('export' + email + '.csv', csv, function (err) {
                         if (err) throw err;
                         var file = 'export.csv';
-                        var path = '../';
+
 
                         res.setHeader('Content-disposition', 'attachment; filename=' + file);
                         res.set('Content-Type', 'text/csv');
                         //res.attachment(file);
                         res.status(200).send('csv');
-                        
+
                     });
                 }
             })
