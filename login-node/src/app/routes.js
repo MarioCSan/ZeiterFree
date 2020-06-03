@@ -270,7 +270,7 @@ module.exports = (app, passport) => {
 
 
     app.post("/descarga", isLoggedIn, (req, res) => {
-        // Aqui ira el metodo de borrado del usuario. Se necesita introducir el email correctamente
+        // Se genera un documento csv con json2csv y que se descargara. La llamada a este metodo solo se hará en la descarga en el momento de borrar
         var email = req.body.email;
 
         if (email != '' && email === req.user.local.email) {
@@ -317,6 +317,7 @@ module.exports = (app, passport) => {
     });
 
     function encriptado(password) {
+        //encripta la contraseña introducida con un bcrypt de 8 vueltas
         return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
     }
 
