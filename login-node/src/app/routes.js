@@ -295,8 +295,8 @@ module.exports = (app, passport) => {
                         var file = 'export.csv';
                         res.setHeader('Content-disposition', 'attachment; filename=' + file);
                         res.set('Content-Type', 'text/csv');
-                        //res.attachment(file);
-                        res.status(200).send('csv');
+                        res.attachment(file);
+                        res.status(200).send(csv);
                     });
                 }
             })
