@@ -1,4 +1,5 @@
 const User = require('../app/models/user');
+const Fichaje = require('../app/models/fichar');
 const bcrypt = require('bcrypt-nodejs');
 const moment = require('moment');
 const json2csv = require('json2csv');
@@ -6,6 +7,12 @@ const fs = require('fs');
 const async = require('async');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
+/*
+Este fichero es largp, pero no te asustes, existen comentarios para ayudarte.
+Cada ruta incluye su algoritmo dentro, por ello es un fichero largo.
+En futuras versiones se debe adelgazar el código aquí presente y utilizar funciones externas. Por falta de tiempo no pudo hacerse y se quedo así.
+Buena suerte 
+*/
 module.exports = (app, passport) => {
     app.use(function (req, res, next) {
         res.locals.message = req.flash('message');
@@ -61,6 +68,7 @@ module.exports = (app, passport) => {
 
 
     app.post("/update", isLoggedIn, (req, res) => {
+        // Cambia la contraseña del usuario conectado con la confirmación de las nuevas contraseñas
         var newPassword = req.body.newPassword;
         var confirmPassword = req.body.confirmPassword;
 
@@ -282,7 +290,7 @@ module.exports = (app, passport) => {
                 } else if (result != null) {
                     //   var csvParser = json2csv({ header: true });
                     let csv;
-                    var fields = ['email:' + req.user.local.email, 'password: ' + req.user.local.password];
+                    var fields = ['email: ' + req.user.local.email, 'password: ' + req.user.local.password];
                     try {
                         csv = json2csv.parse(User, {
                             fields
@@ -306,6 +314,85 @@ module.exports = (app, passport) => {
         }
     });
 
+    /*
+        El código siguiente se encarga de los fichajes del usurio
+    */
+
+    app.get('/consulta', isLoggedIn, (req, res) => {
+        res.render('consulta', {
+            user: req.user
+        })
+    });
+
+    app.post('/fichajeE', isLoggedIn, (req, res) => {
+        var fichaje = fichar('Entrada');
+        if (req.user.id == null || req.user.id == '') {
+            console.log('El id del usuario no ha llegado a fichajeE');
+        } else {
+            console.log(fichaje.fichaje.Tipo);
+            console.log(fichaje.fichaje.Hora);
+            console.log(fichaje.fichaje.Fecha);
+            var usu = req.user.id;
+            guardaFichaje(usu, fichaje);
+        }
+    });
+    const Fichaje = require('./models/fichar');
+    const User = require('./models/user');
+    app.post('/fichajeS', isLoggedIn, (req, res) => {
+        var fichaje = fichar('Salida');
+        var usu = req.user.id;
+        guardaFichaje(usu, fichaje);
+    });
+
+    function fichar(Entrada_salida) {
+        var fichaje = new Fichaje();
+        var fecha = new Date();
+        var hora = HoraActual(fecha);
+        var tipo = Entrada_salida;
+        fichaje.fichaje.Tipo = tipo;
+        fichaje.fichaje.Hora = HoraNumber(hora);
+        fichaje.fichaje.Fecha = fecha.toString().substring(4, 15);
+
+        return fichaje;
+    }
+
+    function HoraActual(fecha) {
+        var min;
+        if (fecha.getMinutes() < 10) {
+            min = '0' + fecha.getMinutes();
+        } else {
+            min = fecha.getMinutes();
+        }
+        var horaString = fecha.getHours() + '' + min;
+
+        return horaString;
+    }
+
+    function HoraNumber(horaString) {
+        return parseInt(horaString);
+    }
+
+    function guardaFichaje(usuID, fichaje) {
+        User.findOne({
+            _id: usuID
+        }, function (err, doc) {
+            if (doc) {
+                doc.local.fichajes.push({
+                    fichaje: {
+                        Tipo: fichaje.fichaje.Tipo,
+                        Fecha: fichaje.fichaje.Fecha,
+                        Hora: fichaje.fichaje.Hora
+                    }
+                });
+                doc.save(function () {
+                    err != null ? console.log(err) : console.log('Fichaje Actualizado');
+                });
+            }
+        });
+    }
+
+    //Fin de los fichajes
+
     app.param('id', function (req, res, next, id) {
         user.findById(id, function (err, docs) {
             if (err) res.json(err);
@@ -320,11 +407,6 @@ module.exports = (app, passport) => {
         //encripta la contraseña introducida con un bcrypt de 8 vueltas
         return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
     }
-
-    // function getCsv(userId){
-    //     let user = user.findById({'_id': userID});
-    //     let csvStream = string
-    // }
 
     function getPassword(password) {
 
