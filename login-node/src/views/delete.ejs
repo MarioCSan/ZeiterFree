@@ -40,23 +40,26 @@
                             <%= message %>
                         </div>
                         <% } %>
-                        <p>Le informamos que para borrar su cuenta debe descargar un fichero con sus datos. Por motivos legales debe conservar este archivo X años</p>
-                         
+                        <p>Le informamos que para borrar su cuenta debe descargar un fichero con sus datos. Por motivos
+                            legales debe conservar este archivo X años</p>
+
                         <form action="/descarga" method="post">
                             <div class="form-group">
-                                <label for="email">Introduzca su email para descargar el fichero, luego podrá borrar su cuenta</label>
+                                <label for="email">Introduzca su email para descargar el fichero, luego podrá borrar su
+                                    cuenta</label>
                                 <input type="email" id="email" name="email" class="form-control" required=''
-                                    oninvalid="this.setCustomValidity('Introduzca un email válido')" required="" oninput="setCustomValidity('')">
+                                    oninvalid="this.setCustomValidity('Introduzca un email válido')" required=""
+                                    oninput="setCustomValidity('')">
                             </div>
-                            <button class='btn btn-warning btm-xs' type="submit" onclick='download()'>Descargar</button>
+                            <button class='btn btn-warning btm-xs' type="submit" onclick='borrar()'>Descargar</button>
                         </form>
                         <form action='/delete' method='post'>
                             <input type='hidden' value='' id='emailHidden' name='emailHidden'>
-                            <button id='delete' type='submit' class="btn btn-danger btn-xs" disabled> Borrar </button>
+                            <button id='delete' type='submit' class="btn btn-danger btn-xs"> Borrar </button>
                         </form>
-                       
 
-                        <a href='/profile' class='btn btn-info btn-xs' >Volver</a>
+
+                        <a href='/profile' class='btn btn-info btn-xs'>Volver</a>
                     </div>
                 </div>
             </div>
@@ -65,16 +68,14 @@
     </div>
 </body>
 <script>
-    function download(){
-        var boton = document.getElementById('delete');
-        var emailValue = document.getElementById('email').value;
-        var hidden = document.getElementById('emailHidden');
-        console.log(emailValue)
-        if (boton.disabled && emailValue!==''){
-            boton.disabled=false;
-            hidden.value = emailValue;
-            console.log(hidden);
-            console.log('It works')
+    window.onload = function () {
+        document.getElementById('delete').style.display = 'none';
+    }
+
+    function borrar() {
+        let botonBorrar = document.getElementById('delete');
+        if (botonBorrar.style.display === 'none') {
+            botonBorrar.style.display = "block";
         }
     }
 </script>

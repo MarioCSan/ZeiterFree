@@ -3,12 +3,19 @@ const Fichaje = require('../app/models/fichar');
 const bcrypt = require('bcrypt-nodejs');
 const moment = require('moment');
 const json2csv = require('json2csv');
+const {
+    Parser,
+    transforms: {
+        unwind
+    }
+} = require('json2csv');
+const flatten = require('lodash.flatten');
 const fs = require('fs');
 const async = require('async');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 /*
-Este fichero es largp, pero no te asustes, existen comentarios para ayudarte.
+Este fichero es largo, pero no te asustes, existen comentarios para ayudarte.
 Cada ruta incluye su algoritmo dentro, por ello es un fichero largo.
 En futuras versiones se debe adelgazar el código aquí presente y utilizar funciones externas. Por falta de tiempo no pudo hacerse y se quedo así.
 Buena suerte 
@@ -282,30 +289,48 @@ module.exports = (app, passport) => {
         var email = req.body.email;
 
         if (email != '' && email === req.user.local.email) {
-            User.findOne({
+
+            User.findById({
                 '_id': req.user.id
             }, (err, result) => {
                 if (err) {
                     console.log(err);
                 } else if (result != null) {
-                    //   var csvParser = json2csv({ header: true });
-                    let csv;
-                    var fields = ['email: ' + req.user.local.email, 'password: ' + req.user.local.password];
-                    try {
-                        csv = json2csv.parse(User, {
-                            fields
-                        });
-                    } catch (err) {
-                        console.log(err);
-                    }
-                    fs.writeFile('export' + email + '.csv', csv, function (err) {
+                    console.log('query busqueda: ' + result)
+                    //  const fields = ['fichajes.fichaje.Tipo:', 'fichajes.fichaje.Fecha', 'fichajes.fichaje.Hora'];
+                    //  const transforms = [unwind({
+                    //      paths: ['fichajes', 'fichajes'],
+                    //      blankOut: true
+                    //  })];
+
+                    //  const json2csvParser = new Parser({
+                    //      fields,
+                    //      transforms
+                    //  });
+
+                     let csv
+                     try {
+                        //  csv = json2csv.parse(User, {
+                        //      fields
+                        //  });
+                        
+                        csv = json2csv.parse(result);
+                        
+                     } catch (err) {
+                         console.log(csv)
+                     }
+                     
+                    fs.writeFile(req.user.email + '.csv', csv, function (err) {
                         if (err) throw err;
-                        var file = 'export.csv';
+                        var file = req.user.local.email + '.csv';
                         res.setHeader('Content-disposition', 'attachment; filename=' + file);
                         res.set('Content-Type', 'text/csv');
                         res.attachment(file);
                         res.status(200).send(csv);
+                            console.log('exportado: ' + file)
+                            console.log('contenido: ' + csv)
                     });
+                    
                 }
             })
         } else {
