@@ -1,0 +1,16 @@
+{ local:
+   { fichajes:
+      [ [Object],
+        [Object],
+        [Object],
+        [Object],
+        [Object],
+        [Object],
+        [Object],
+        [Object],
+        [Object] ],
+     email: 'example@me.es',
+     password:
+      '$2a$08$aQ2REKqeNF2QLIsGOAnZAu/XaktOtDvV6N36o2QbIC4mpR2CSBcQW' },
+  _id: 5eda52ab07ebc233c8b401a7,
+  __v: 9 }

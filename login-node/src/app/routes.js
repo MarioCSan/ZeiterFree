@@ -292,47 +292,83 @@ module.exports = (app, passport) => {
 
             User.findById({
                 '_id': req.user.id
-            }, (err, result) => {
-                if (err) {
-                    console.log(err);
-                } else if (result != null) {
-                    console.log('query busqueda: ' + result)
-                    //  const fields = ['fichajes.fichaje.Tipo:', 'fichajes.fichaje.Fecha', 'fichajes.fichaje.Hora'];
-                    //  const transforms = [unwind({
-                    //      paths: ['fichajes', 'fichajes'],
-                    //      blankOut: true
-                    //  })];
-
-                    //  const json2csvParser = new Parser({
-                    //      fields,
-                    //      transforms
+            }, function (err, user) {
+                var rawData = JSON.stringify(user);
+                var json = JSON.parse(rawData);
+                
+                console.log(typeof (json))
+                console.log(json)
+                let csv
+                try {
+                    //  csv = json2csv.parse(User, {
+                    //      fields
                     //  });
-
-                     let csv
-                     try {
-                        //  csv = json2csv.parse(User, {
-                        //      fields
-                        //  });
-                        
-                        csv = json2csv.parse(result);
-                        
-                     } catch (err) {
-                         console.log(csv)
-                     }
-                     
-                    fs.writeFile(req.user.email + '.csv', csv, function (err) {
-                        if (err) throw err;
-                        var file = req.user.local.email + '.csv';
-                        res.setHeader('Content-disposition', 'attachment; filename=' + file);
-                        res.set('Content-Type', 'text/csv');
-                        res.attachment(file);
-                        res.status(200).send(csv);
-                            console.log('exportado: ' + file)
-                            console.log('contenido: ' + csv)
+                    const fields = ['local.fichajes.fichaje.Tipo', 'local.fichajes.fichaje.Fecha', 'local.fichajes.fichaje.Hora'];
+                    const transforms = [unwind({
+                        paths: ['local.fichajes', 'local.fichajes.fichaje']
+                    })];
+                    const json2csvParser = new Parser({
+                        fields,
+                        transforms
                     });
-                    
+
+                    csv = json2csvParser.parse(json)
+
+                } catch (err) {
+                    console.log(csv)
                 }
+
+                fs.writeFile(req.user.email + '.csv', csv, function (err) {
+                    if (err) throw err;
+                    var file = req.user.local.email + '.csv';
+                    res.setHeader('Content-disposition', 'attachment; filename=' + file);
+                    res.set('Content-Type', 'text/csv');
+                    res.attachment(file);
+                    res.status(200).send(csv);
+                    console.log(csv)
+
+                });
+
+
+                //return JSON.parse(JSON.stringify(user))
             })
+
+            //console.log(json)
+
+            // console.log(json)
+            // User.findById({
+            //     '_id': req.user.id
+            // }, (err, result) => {
+            //     if (err) {
+            //         console.log(err);
+            //     } else if (result != null) {
+            //         console.log('query busqueda: ' + result)
+
+            //          let csv
+            //          try {
+            //             //  csv = json2csv.parse(User, {
+            //             //      fields
+            //             //  });
+
+            //             csv = json2csv.parse(result);
+
+            //          } catch (err) {
+            //              console.log(csv)
+            //          }
+
+            //         fs.writeFile(req.user.email + '.csv', csv, function (err) {
+            //             if (err) throw err;
+            //             var file = req.user.local.email + '.csv';
+            //             res.setHeader('Content-disposition', 'attachment; filename=' + file);
+            //             res.set('Content-Type', 'text/csv');
+            //             res.attachment(file);
+            //             res.status(200).send(csv);
+            //                 console.log('exportado: ' + file)
+            //                 console.log('contenido: ' + csv)
+            //         });
+
+            //     }
+            // })
         } else {
             req.flash('message', 'El email no es el mismo que se introdujo para registrarse')
             res.redirect('/delete');
