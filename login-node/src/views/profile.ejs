@@ -4,70 +4,138 @@
 <head>
     <meta charset="utf-8">
     <title>Página de perfil de usuario</title>
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
-        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
-        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous">
-    </script>
-
-    <link rel="stylesheet" href="/css/main.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <%- include ('partials/head'); %>
+    <%- include ('partials/navbar'); %>
+    <link rel="stylesheet" type="text/css" href="css/fonts.css" />
 </head>
+<script src="/socket.io/socket.io.js"></script>
+<script type="text/javascript">
+    //inicia valores del reloj a los que recoge el socket al cargar la pagina
+    $(document).ready(function () {
+        var tiempo;
+        var socket;
+        var par = false;
+        // server de hora -- pool.ntp.org:123 
+        socket = io.connect('localhost:3000');
+        socket.on('datetime', function (data) {
+            tiempo = data.datetime;
+        });
+
+        //reconecta cada 30s al socket para resincronizar reloj 
+        setInterval(function () {
+            //window.location.reload(false);
+            socket = io.connect('localhost:3000');
+            socket.on('datetime', function (data) {
+                tiempo = data.datetime;
+            });
+            //console.log(new Date(tiempo));
+
+        }, 30000);
+
+        // SIMULA PARPADEO, CAMBIA COLOR DE LOS ":"
+        $(function () {
+            cuenta = 0;
+            setInterval(function () {
+                cuenta++;
+                $(".dots").fadeOut(100, function () {
+                    $(this)
+                        .css('color', cuenta % 2 == 0 ? 'white' : "#ea2942")
+                        .fadeIn(100);
+                });
+            }, 1000);
+        });
+
+        // PARA RELLENAR ETIQUETAS DEL RELOJ
+        setInterval(function () {
+
+            var reloj = new Date(tiempo);
+            tiempo = tiempo + 1000;
+            var horas = reloj.getHours();
+            var minutos = reloj.getMinutes();
+            var segundos = reloj.getSeconds();
+
+            $(".hours").html((horas < 10 ? "0" : "") + horas);
+            $(".min").html((minutos < 10 ? "0" : "") + minutos);
+            //si queremos segundero
+            //$(".sec").html(( segundos < 10 ? "0" : "" ) + segundos);
+        }, 1000);
+
+
+        var lastFichaje = document.getElementById("lastFichaje").textContent;
+        console.log(lastFichaje);
+        if (lastFichaje == undefined || lastFichaje == "") {
+            botonSalida.hidden = true;
+            botonEntrada.hidden = false;
+        } else {
+            if (lastFichaje == 'Salida') {
+                botonSalida.hidden = true;
+                botonEntrada.hidden = false;
+            } else {
+                botonSalida.hidden = false;
+                botonEntrada.hidden = true;
+            }
+        }
+    });
+</script>
 
 <body class="profile">
     <div class="container">
         <header class="text-center">
-            <h1>Página personal</h1>
-            <a href="/logout" class="btn btn-info">Salir</a>
-
-        </header>
-        <hr>
-        <div class="container">
-            <div class="col-sm-6">
-                <div class="card">
-                    <div class="card-body">
-                        <% if (message && message.length > 0) { %>
-                        <div class="alert alert-success">
-                            <%= message %>
-                        </div>
-                        <% } %>
-                        <h3 class="card-title">
-                            <span class="fa fa-user"></span> Datos del usuario:
+            <br />
+            <h1><strong>ZEITER VIRTUAL FREE</strong></h1>
+            <br />
+            <!-- Contenedor html del reloj-->
+            <div class="container d-flex justify-content-center">
+                <div class="col-md-3">
+                    <div id="reloj" class="card bg-primary text-white">
+                        <h3 class="card-title text-center">
+                            <div class="d-flex flex-wrap justify-content-center mt-2">
+                                <a><span class="badge hours"></span></a>
+                                <a><span class="dots">:</span></a>
+                                <a><span class="badge min"></span></a>
+                                <!-- Si queremos segundero -->
+                                <!-- :<a><span class="badge sec"></span></a> -->
+                            </div>
                         </h3>
-                        <p>
-                            <strong>id</strong>: <%= user._id %><br />
-                            <strong>email</strong>: <%= user.local.email %><br />
-                            <strong>password</strong>: <%= user.local.password %>
-                        </p>
-                        <!-- Fichajes debajo -->
-                        <!-- <form action="/fichajeE" method="post"></form> -->
-                        <input type='button' class="btn btn-success" value="Entrada" id='entrar' onclick='alert("Entrada Registrada")'>
-
-                        <!-- </form> -->
-                        <!-- <form action="/fichajeS" method="post"> -->
-                        <input type="button" class="btn btn-success" value="Salida" id='salida' onclick='alert("Salida Registrada")'>
-                        <!-- </form> -->
-                        <a href="/consulta" class="btn btn-outline-info">Consulta fichajes</a>
-                        <!-- Fin fichajes -->
-
-                        <a href="/logout" class="btn btn-warning">Salir</a>
-                        <a href='/update' class='btn btn-info'>Cambiar contraseña</a>
-                        <a href='/delete' class='btn btn-danger'>Borrar Cuenta</a>
                     </div>
                 </div>
             </div>
+            <br />
+
+        </header>
+        <hr>
+        <div class="container d-flex justify-content-center">
+            <div class="col-sm-7">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">
+                            <span class="fa fa-user"></span> Conectado como
+                            <span style="color: #ea2942;"><%= user.local.email %></span><br />
+                        </h3>
+                        <hr />
+                        <div class="text-center">
+                            <input type='button' class="btn btn-outline-success btn-lg" value="Entrada" id='entrar'>
+                            <input type='button' class="btn btn-outline-success btn-lg" value="Salida" id='salida'>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
-
-
     </div>
+    <%for(let val of user.local.fichajes){
+            var ultima = val.fichaje.Tipo;
+        }%>
+    <div id='lastFichaje' hidden><%=ultima%></div>
     <script>
         const botonEntrada = document.getElementById('entrar');
         const botonSalida = document.getElementById('salida');
 
         botonEntrada.addEventListener('click', function (e) {
             console.log('Se ha pulsado Entrada');
+            habilitar();
             fetch('/fichajeE', {
                     method: 'POST'
                 })
@@ -81,6 +149,7 @@
         });
         botonSalida.addEventListener('click', function (e) {
             console.log('Se ha pulsado Salida');
+            habilitar();
             fetch('/fichajeS', {
                     method: 'POST'
                 })
@@ -92,6 +161,33 @@
                     }
                 });
         });
+        //para la version final del control de entrada/salida:
+        //1.    Revisar el tipo del ultimo fichaje del usuario
+        //2.    Si es tipo entrada, deshabilitar el botonEntrada
+        //3.    Si el tipo salida, deshabilitar el botonSalida
+
+
+        // function deshabilitar(){
+        //     if(botonSalida.hidden == true){
+        //         botonSalida.hidden = false;
+        //         botonEntrada.hidden = true;
+        //    }else{
+        //        botonSalida.hidden = false;
+        //        botonEntrada.hidden = true;
+        //    }
+        //    alert('se ha fichado con exito');
+        // }   
+
+        function habilitar() {
+            if (botonEntrada.hidden == true) {
+                botonSalida.hidden = true;
+                botonEntrada.hidden = false;
+            } else {
+                botonSalida.hidden = false;
+                botonEntrada.hidden = true;
+            }
+            alert('se ha fichado con exito');
+        }
     </script>
 </body>
 

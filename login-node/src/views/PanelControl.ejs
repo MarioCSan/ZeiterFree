@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Página de perfil de usuario</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <%- include ('partials/head'); %>
+    <%- include ('partials/navbar'); %>
+    <link rel="stylesheet" type="text/css" href="css/fonts.css" />
+</head>
+<script src="/socket.io/socket.io.js"></script>
+<script type="text/javascript">
+    //inicia valores del reloj a los que recoge el socket al cargar la pagina
+    $(document).ready(function () {
+        var tiempo;
+        var socket;
+        var par = false;
+        // server de hora -- pool.ntp.org:123 
+        socket = io.connect('localhost:3000');
+        socket.on('datetime', function (data) {
+            tiempo = data.datetime;
+        });
+
+        //reconecta cada 30s al socket para resincronizar reloj 
+        setInterval(function () {
+            //window.location.reload(false);
+            socket = io.connect('localhost:3000');
+            socket.on('datetime', function (data) {
+                tiempo = data.datetime;
+            });
+            //console.log(new Date(tiempo));
+
+        }, 30000);
+
+        // SIMULA PARPADEO, CAMBIA COLOR DE LOS ":"
+        $(function () {
+            cuenta = 0;
+            setInterval(function () {
+                cuenta++;
+                $(".dots").fadeOut(100, function () {
+                    $(this)
+                        .css('color', cuenta % 2 == 0 ? 'white' : "#ea2942")
+                        .fadeIn(100);
+                });
+            }, 1000);
+        });
+
+        // PARA RELLENAR ETIQUETAS DEL RELOJ
+        setInterval(function () {
+
+            var reloj = new Date(tiempo);
+            tiempo = tiempo + 1000;
+            var horas = reloj.getHours();
+            var minutos = reloj.getMinutes();
+            var segundos = reloj.getSeconds();
+
+            $(".hours").html((horas < 10 ? "0" : "") + horas);
+            $(".min").html((minutos < 10 ? "0" : "") + minutos);
+            //si queremos segundero
+            //$(".sec").html(( segundos < 10 ? "0" : "" ) + segundos);
+        }, 1000);
+
+
+        var lastFichaje = document.getElementById("lastFichaje").textContent;
+        console.log(lastFichaje);
+        if (lastFichaje == undefined || lastFichaje == "") {
+            botonSalida.hidden = true;
+            botonEntrada.hidden = false;
+        } else {
+            if (lastFichaje == 'Salida') {
+                botonSalida.hidden = true;
+                botonEntrada.hidden = false;
+            } else {
+                botonSalida.hidden = false;
+                botonEntrada.hidden = true;
+            }
+        }
+    });
+</script>
+
+<body class="profile">
+    <div class="container">
+        <header class="text-center">
+            <br />
+            <h1><strong>ZEITER VIRTUAL FREE</strong></h1>
+            <br />
+            <!-- Contenedor html del reloj-->
+            <div class="container d-flex justify-content-center">
+                <div class="col-md-3">
+                    <div id="reloj" class="card bg-primary text-white">
+                        <h3 class="card-title text-center">
+                            <div class="d-flex flex-wrap justify-content-center mt-2">
+                                <a><span class="badge hours"></span></a>
+                                <a><span class="dots">:</span></a>
+                                <a><span class="badge min"></span></a>
+                                <!-- Si queremos segundero -->
+                                <!-- :<a><span class="badge sec"></span></a> -->
+                            </div>
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            <br />
+
+        </header>
+        <hr>
+        <div class="container d-flex justify-content-center">
+            <div class="col-sm-7">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">
+                            <span class="fa fa-user"></span> Conectado como
+                            <span style="color: #ea2942;"><%= user.local.email %></span><br />
+                        </h3>
+                        <hr />
+                        <div class="text-center">
+                            <a href='/update' class="btn btn-outline-success btn-lg">Cambiar contraseña</a>
+                            <a href='/delete' class="btn btn-outline-success btn-lg">Borrar cuenta</a>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+</html>

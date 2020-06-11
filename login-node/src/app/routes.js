@@ -66,6 +66,13 @@ module.exports = (app, passport) => {
         res.redirect('/');
     });
 
+    //panel de control para el borrado y update de la contraseña
+    app.get('/panel', isLoggedIn, (req, res) => {
+        res.render('PanelControl', {
+            user: req.user
+        });
+    });
+
     //Update
     app.get('/update', isLoggedIn, (req, res) => {
         res.render('update', {
@@ -295,7 +302,7 @@ module.exports = (app, passport) => {
             }, function (err, user) {
                 var rawData = JSON.stringify(user);
                 var json = JSON.parse(rawData);
-                
+
                 console.log(typeof (json))
                 console.log(json)
                 let csv
@@ -329,46 +336,7 @@ module.exports = (app, passport) => {
 
                 });
 
-
-                //return JSON.parse(JSON.stringify(user))
             })
-
-            //console.log(json)
-
-            // console.log(json)
-            // User.findById({
-            //     '_id': req.user.id
-            // }, (err, result) => {
-            //     if (err) {
-            //         console.log(err);
-            //     } else if (result != null) {
-            //         console.log('query busqueda: ' + result)
-
-            //          let csv
-            //          try {
-            //             //  csv = json2csv.parse(User, {
-            //             //      fields
-            //             //  });
-
-            //             csv = json2csv.parse(result);
-
-            //          } catch (err) {
-            //              console.log(csv)
-            //          }
-
-            //         fs.writeFile(req.user.email + '.csv', csv, function (err) {
-            //             if (err) throw err;
-            //             var file = req.user.local.email + '.csv';
-            //             res.setHeader('Content-disposition', 'attachment; filename=' + file);
-            //             res.set('Content-Type', 'text/csv');
-            //             res.attachment(file);
-            //             res.status(200).send(csv);
-            //                 console.log('exportado: ' + file)
-            //                 console.log('contenido: ' + csv)
-            //         });
-
-            //     }
-            // })
         } else {
             req.flash('message', 'El email no es el mismo que se introdujo para registrarse')
             res.redirect('/delete');

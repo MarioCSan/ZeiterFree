@@ -11,20 +11,21 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
         integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous">
     </script>
-
+    <%- include ('partials/head'); %>
+    <%- include ('partials/navbar'); %>
     <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/fonts.css" />
 </head>
 
 <body class="profile">
     <div class="container">
         <header class="text-center">
-            <h1>Página personal</h1>
-            <a href="/logout" class="btn btn-info">Salir</a>
-
+            <br />
+            <h1><strong>ZEITER VIRTUAL FREE</strong></h1>
         </header>
         <hr>
-        <div class="container">
-            <div class="col-sm-6">
+        <div class="container  d-flex justify-content-center">
+            <div class="col-sm-7">
                 <div class="card">
                     <div class="card-body">
                         <h3 class="card-title">
@@ -55,12 +56,11 @@
                         </form>
                         <form action='/delete' method='post'>
                             <input type='hidden' value='' id='emailHidden' name='emailHidden'>
-                            <button id='delete' type='submit' class="btn btn-danger btn-xs"> Borrar </button>
+                            <input id='delete' type='submit' class="btn btn-danger btn-xs" value='Borrar'>
+
                         </form>
-
-
-                        <a href='/profile' class='btn btn-info btn-xs'>Volver</a>
                     </div>
+                    <a href='/panel' class='btn btn-secondary btn-xs'>Volver atras</a>
                 </div>
             </div>
         </div>
@@ -74,7 +74,7 @@
 
     function borrar() {
         let botonBorrar = document.getElementById('delete');
-        if (botonBorrar.style.display === 'none') {
+        if (botonBorrar.style.display === 'none' && document.getElementById('email').value != '') {
             botonBorrar.style.display = "block";
         }
     }

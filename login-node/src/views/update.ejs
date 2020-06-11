@@ -11,20 +11,22 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
         integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous">
     </script>
-
+    <%- include ('partials/head'); %>
+    <%- include ('partials/navbar'); %>
     <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/fonts.css" />
+
 </head>
 
 <body class="profile">
     <div class="container">
         <header class="text-center">
-            <h1>Página personal</h1>
-            <a href="/logout" class="btn btn-info">Salir</a>
-
+            <br />
+            <h1><strong>ZEITER VIRTUAL FREE</strong></h1>
         </header>
         <hr>
-        <div class="container">
-            <div class="col-sm-6">
+        <div class="container d-flex justify-content-center">
+            <div class="col-sm-7">
                 <div class="card">
                     <div class="card-body">
                         <% if (message && message.length > 0) { %>
@@ -33,36 +35,28 @@
                         </div>
                         <% } %>
                         <h3 class="card-title">
-                            <span class="fa fa-user"></span> </h3>
+                            <span class="fa fa-user"></span> Conectado como
+                            <span style="color: #ea2942;"><%= user.local.email %></span><br />
 
-                        <form action="/update" method="post" onsubmit="return validar()">
-                            <!-- <div class="form-group">
-                                <label for="email">Correo electrónico:</label>
-                                <input type="email" name="email" class="form-control">
-                            </div> -->
+                            <form action="/update" method="post" onsubmit="return validar()">
 
-                            <!-- Contraseña antigua -->
-                            <!-- <div class="form-group">
-                                <label for="password">Contraseña antigua:</label>
-                                <input type="password" id="oldPassword" name="oldPassword" class="form-control">
-                            </div> -->
+                                <!-- Nueva contraseña -->
+                                <div class="form-group">
+                                    <label for="password">nueva contraseña:</label>
+                                    <input type="password" id='newPassword' name="newPassword" class="form-control">
+                                </div>
 
-                            <!-- Nueva contraseña -->
-                            <div class="form-group">
-                                <label for="password">nueva contraseña:</label>
-                                <input type="password" id='newPassword' name="newPassword" class="form-control">
-                            </div>
-
-                            <!-- confirmar contraseña -->
-                            <div class="form-group">
-                                <label for="password">Confirma la contraseña:</label>
-                                <input type="password" id="confirmPassword" name="confirmPassword" class="form-control">
-                            </div>
-                            <input type="submit" class="btn btn-warning btn-xs" value="actualizar">
-                        </form>
-
-                        <a href='/profile' class='btn btn-info btn-xs'>Volver atras</a>
+                                <!-- confirmar contraseña -->
+                                <div class="form-group">
+                                    <label for="password">Confirma la contraseña:</label>
+                                    <input type="password" id="confirmPassword" name="confirmPassword"
+                                        class="form-control">
+                                </div>
+                                <input type="submit" class="btn btn-warning btn-xs" value="actualizar">
+                                <!-- <a href='/profile' class='btn btn-info btn-xs'>Volver atras</a> -->
+                            </form>
                     </div>
+                    <a href='/panel' class='btn btn-secondary btn-xs'>Volver atras</a>
                 </div>
             </div>
         </div>

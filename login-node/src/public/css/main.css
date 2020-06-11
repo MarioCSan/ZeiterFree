@@ -1,18 +1,64 @@
+
+.index {
+    background: #ea2942; /* navegadores clásicos */
+    background: -webkit-linear-gradient(to right, #ea2942, #7c1523); /* Chrome, Safari */
+    background: linear-gradient(to right, #ea2942, #7c1523); /*W3C, IE10+, Edge, Firefox */
+}
+
+
 .login {
-    background: #cf1812; /* navegadores clásicos */
-    background: -webkit-linear-gradient(to right, #cf1812, #690a0a); /* Chrome, Safari */
-    background: linear-gradient(to right, #cf1812, #690a0a); /*W3C, IE10+, Edge, Firefox */
+    background: #ea2942; /* navegadores clásicos */
+    background: -webkit-linear-gradient(to right, #ea2942, #7c1523); /* Chrome, Safari */
+    background: linear-gradient(to right, #ea2942, #7c1523); /*W3C, IE10+, Edge, Firefox */
 }
 
 .signup {
-    background: #000428; /* navegadores clásicos */
-    background: -webkit-linear-gradient(to right, #004e92, #000428); /* Chrome, Safari */
-    background: linear-gradient(to right, #004e92, #000428); /*W3C, IE10+, Edge, Firefox */
+    background: #ea2942; /* navegadores clásicos */
+    background: -webkit-linear-gradient(to right, #ea2942, #7c1523); /* Chrome, Safari */
+    background: linear-gradient(to right, #ea2942, #7c1523); /*W3C, IE10+, Edge, Firefox */
 }
 
 .profile {
-    background: #92c244; /* navegadores clásicos */
-    background: -webkit-linear-gradient(to right, #92c244, #15860b); /* Chrome, Safari */
-    background: linear-gradient(to right, #92c244, #15860b); /*W3C, IE10+, Edge, Firefox */
-
+    background: #c1c4c7; /* navegadores clásicos */
+    background: -webkit-linear-gradient(to right, #c1c4c7, #c1c4c7); /* Chrome, Safari */
+    background: linear-gradient(to right, #c1c4c7, #c1c4c7); /*W3C, IE10+, Edge, Firefox */
 }
+
+#reloj {
+    background: #ea2942; /* navegadores clásicos */
+    background: -webkit-linear-gradient(to right, #ea2942, #ea2942); /* Chrome, Safari */
+    background: linear-gradient(to right, #ea2942, #ea2942);
+    @font-face {
+        font-family: 'digital-7';
+        src: local('../digital-7.ttf'),
+             url('icomoon-webfont.ttf') format('truetype')
+        font-weight: normal;
+        font-style: normal;
+        font-strecht: condensed;
+        unicode-range: "U+0-10FFFF";
+    }
+}
+
+.btn-outline-secondary:hover {
+    background-color: #c1c4c7 !important;
+}
+
+
+.forgot {
+    background: #ea2942; /* navegadores clásicos */
+    background: -webkit-linear-gradient(to right, #ea2942, #7c1523); /* Chrome, Safari */
+    background: linear-gradient(to right, #ea2942, #7c1523); /*W3C, IE10+, Edge, Firefox */
+}
+
+.reset {
+    background: #aeb6ff; /* navegadores clásicos */
+    background: -webkit-linear-gradient(to right, #aeb6ff, #363d7a); /* Chrome, Safari */
+    background: linear-gradient(to right, #aeb6ff, #363d7a); /*W3C, IE10+, Edge, Firefox */
+}
+
+body{
+    background: #C9D6FF;
+    background: -webkit-linear-gradient(to right, #E2E2E2, #C9D6FF);
+    background: linear-gradient(to right, #E2E2E2, #C9D6FF);
+    }
+    h3,a{font-family: 'alarm clock';}
