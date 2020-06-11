@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Página de perfil de usuario</title>
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous">
+    </script>
+    <%- include ('partials/head'); %>
+    <%- include ('partials/navbar'); %>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/fonts.css" />
+
+</head>
+
+<body class="profile">
+    <div class="container">
+        <header class="text-center">
+            <br />
+            <h1><strong>ZEITER VIRTUAL FREE</strong></h1>
+        </header>
+        <hr>
+        <div class="container d-flex justify-content-center">
+            <div class="col-sm-7">
+                <div class="card">
+                    <div class="card-body">
+                        <% if (message && message.length > 0) { %>
+                        <div class="alert alert-danger">
+                            <%= message %>
+                        </div>
+                        <% } %>
+                        <h3 class="card-title">
+                            <span class="fa fa-user"></span> Conectado como
+                            <span style="color: #ea2942;"><%= user.local.email %></span><br />
+
+                            <form action="/update" method="post" onsubmit="return validar()">
+
+                                <!-- Nueva contraseña -->
+                                <div class="form-group">
+                                    <label for="password">nueva contraseña:</label>
+                                    <input type="password" id='newPassword' name="newPassword" class="form-control">
+                                </div>
+
+                                <!-- confirmar contraseña -->
+                                <div class="form-group">
+                                    <label for="password">Confirma la contraseña:</label>
+                                    <input type="password" id="confirmPassword" name="confirmPassword"
+                                        class="form-control">
+                                </div>
+                                <input type="submit" class="btn btn-warning btn-xs" value="actualizar">
+                                <!-- <a href='/profile' class='btn btn-info btn-xs'>Volver atras</a> -->
+                            </form>
+                    </div>
+                    <a href='/panel' class='btn btn-secondary btn-xs'>Volver atras</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+<script>
+    function validar() {
+        var old = document.getElementById('password').value;
+        var nueva = document.getElementById('newPassword').value;
+        var confirmar = document.getElementById('confirmPassword').value;
+        nueva == confirmar && old != '' ? true : alert('rellena los campos');
+
+    }
+</script>
+
+</html>

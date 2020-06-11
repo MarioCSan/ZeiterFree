@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Página de perfil de usuario</title>
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous">
+    </script>
+    <%- include ('partials/head'); %>
+    <%- include ('partials/navbar'); %>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/fonts.css" />
+</head>
+
+<body class="profile">
+    <div class="container">
+        <header class="text-center">
+            <br />
+            <h1><strong>ZEITER VIRTUAL FREE</strong></h1>
+        </header>
+        <hr>
+        <div class="container  d-flex justify-content-center">
+            <div class="col-sm-7">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">
+                            <span class="fa fa-user">
+                                Eliminar su cuenta
+                            </span> </h3>
+                        <div class="alert alert-danger">
+                            Si borra su cuenta no se podrá recuperar la información
+                        </div>
+
+                        <% if (message && message.length > 0) { %>
+                        <div class="alert alert-danger">
+                            <%= message %>
+                        </div>
+                        <% } %>
+                        <p>Le informamos que para borrar su cuenta debe descargar un fichero con sus datos. Por motivos
+                            legales debe conservar este archivo X años</p>
+
+                        <form action="/descarga" method="post">
+                            <div class="form-group">
+                                <label for="email">Introduzca su email para descargar el fichero, luego podrá borrar su
+                                    cuenta</label>
+                                <input type="email" id="email" name="email" class="form-control" required=''
+                                    oninvalid="this.setCustomValidity('Introduzca un email válido')" required=""
+                                    oninput="setCustomValidity('')">
+                            </div>
+                            <button class='btn btn-warning btm-xs' type="submit" onclick='borrar()'>Descargar</button>
+                        </form>
+                        <form action='/delete' method='post'>
+                            <input type='hidden' value='' id='emailHidden' name='emailHidden'>
+                            <input id='delete' type='submit' class="btn btn-danger btn-xs" value='Borrar'>
+
+                        </form>
+                    </div>
+                    <a href='/panel' class='btn btn-secondary btn-xs'>Volver atras</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+<script>
+    window.onload = function () {
+        document.getElementById('delete').style.display = 'none';
+    }
+
+    function borrar() {
+        let botonBorrar = document.getElementById('delete');
+        if (botonBorrar.style.display === 'none' && document.getElementById('email').value != '') {
+            botonBorrar.style.display = "block";
+        }
+    }
+</script>
+
+</html>
