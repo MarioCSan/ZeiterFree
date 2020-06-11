@@ -9,7 +9,6 @@ const {
         unwind
     }
 } = require('json2csv');
-const flatten = require('lodash.flatten');
 const fs = require('fs');
 const async = require('async');
 const crypto = require('crypto');
