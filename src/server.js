@@ -1,3 +1,11 @@
+/*
+    Madrid 2020
+    Repositorio del proyecto: https: //github.com/DrunkPsyduck/ZeiterFree/
+    Desarrollado por:
+    Adrián Marina Viera: https: //github.com/Amarvie
+    Sergio Tejera de la Torre:
+    Mario Canales Sánchez: https: //github.com/DrunkPsyduck
+*/
 const express = require('express');
 const app = express();
 const socketIO = require('socket.io');

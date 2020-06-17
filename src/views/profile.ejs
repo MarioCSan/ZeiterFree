@@ -1,190 +1,203 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>Página de perfil de usuario</title>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-        <%- include ('partials/navbar'); %>       
-        <link rel="stylesheet" type="text/css" href="css/fonts.css"/> 
-    </head>
-    <script src="/socket.io/socket.io.js"></script>
-    <script type="text/javascript">
 
-        //inicia valores del reloj a los que recoge el socket al cargar la pagina
-        $(document).ready(function() {
-            var tiempo;
-            var socket;
-            var par = false;
-            // server de hora -- pool.ntp.org:123 
+<head>
+    <!--
+    Madrid 2020
+    Repositorio del proyecto: https://github.com/DrunkPsyduck/ZeiterFree/
+    Desarrollado por:
+    Adrián Marina Viera: https://github.com/Amarvie
+    Sergio Tejera de la Torre: 
+    Mario Canales Sánchez: https://github.com/DrunkPsyduck
+ -->
+    <meta charset="utf-8">
+    <title>Página de perfil de usuario</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <%- include ('partials/navbar'); %>
+    <link rel="stylesheet" type="text/css" href="css/fonts.css" />
+</head>
+<script src="/socket.io/socket.io.js"></script>
+<script type="text/javascript">
+    //inicia valores del reloj a los que recoge el socket al cargar la pagina
+    $(document).ready(function () {
+        var tiempo;
+        var socket;
+        var par = false;
+        // server de hora -- pool.ntp.org:123 
+        socket = io.connect('localhost:3000');
+        socket.on('datetime', function (data) {
+            tiempo = data.datetime;
+        });
+
+        //reconecta cada 30s al socket para resincronizar reloj 
+        setInterval(function () {
+            //window.location.reload(false);
             socket = io.connect('localhost:3000');
             socket.on('datetime', function (data) {
                 tiempo = data.datetime;
-             });
-
-            //reconecta cada 30s al socket para resincronizar reloj 
-            setInterval(function() {
-                //window.location.reload(false);
-                socket = io.connect('localhost:3000'); 
-                socket.on('datetime', function (data) {
-                tiempo = data.datetime;
-                });
-                 //console.log(new Date(tiempo));
-
-            }, 30000);
-    
-            // SIMULA PARPADEO, CAMBIA COLOR DE LOS ":"
-            $(function() {
-                cuenta = 0;
-                setInterval(function() {
-                    cuenta++;
-                    $(".dots").fadeOut(100, function() {
-                        $(this)
-                        .css('color', cuenta % 2 == 0 ? 'white' : "#ea2942") 
-                        .fadeIn(100);
-                    });
-                }, 1000);
             });
-            
-            // PARA RELLENAR ETIQUETAS DEL RELOJ
-            setInterval(function() {
-   
-                var reloj = new Date(tiempo);
-                tiempo = tiempo + 1000;
-                var horas = reloj.getHours();
-                var minutos = reloj.getMinutes();
-                var segundos = reloj.getSeconds();
-        
-                $(".hours").html(( horas < 10 ? "0" : "" ) + horas);
-                $(".min").html(( minutos < 10 ? "0" : "" ) + minutos);
-                //si queremos segundero
-                //$(".sec").html(( segundos < 10 ? "0" : "" ) + segundos);
-            }, 1000);
+            //console.log(new Date(tiempo));
 
-        
+        }, 30000);
+
+        // SIMULA PARPADEO, CAMBIA COLOR DE LOS ":"
+        $(function () {
+            cuenta = 0;
+            setInterval(function () {
+                cuenta++;
+                $(".dots").fadeOut(100, function () {
+                    $(this)
+                        .css('color', cuenta % 2 == 0 ? 'white' : "#ea2942")
+                        .fadeIn(100);
+                });
+            }, 1000);
+        });
+
+        // PARA RELLENAR ETIQUETAS DEL RELOJ
+        setInterval(function () {
+
+            var reloj = new Date(tiempo);
+            tiempo = tiempo + 1000;
+            var horas = reloj.getHours();
+            var minutos = reloj.getMinutes();
+            var segundos = reloj.getSeconds();
+
+            $(".hours").html((horas < 10 ? "0" : "") + horas);
+            $(".min").html((minutos < 10 ? "0" : "") + minutos);
+            //si queremos segundero
+            //$(".sec").html(( segundos < 10 ? "0" : "" ) + segundos);
+        }, 1000);
+
+
         var lastFichaje = document.getElementById("lastFichaje").textContent;
-            console.log(lastFichaje);
-            if(lastFichaje == undefined || lastFichaje == ""){
+        console.log(lastFichaje);
+        if (lastFichaje == undefined || lastFichaje == "") {
+            botonSalida.hidden = true;
+            botonEntrada.hidden = false;
+        } else {
+            if (lastFichaje == 'Salida') {
                 botonSalida.hidden = true;
                 botonEntrada.hidden = false;
-            }else{
-                if(lastFichaje == 'Salida'){
-                    botonSalida.hidden = true;
-                    botonEntrada.hidden = false;
-                }else{
-                    botonSalida.hidden = false;
-                    botonEntrada.hidden = true;
-                }
+            } else {
+                botonSalida.hidden = false;
+                botonEntrada.hidden = true;
             }
-        });
-       
-        </script>
-    <body class="profile">
-        <div class="container">
-            <header class="text-center">
-                <br/>
-                <h1><strong>ZEITER VIRTUAL FREE</strong></h1>
-                <br/>
-                <!-- Contenedor html del reloj-->
-                <div class="container d-flex justify-content-center">
+        }
+    });
+</script>
+
+<body class="profile">
+    <div class="container">
+        <header class="text-center">
+            <br />
+            <h1><strong>ZEITER VIRTUAL FREE</strong></h1>
+            <br />
+            <!-- Contenedor html del reloj-->
+            <div class="container d-flex justify-content-center">
                 <div class="col-md-3">
                     <div id="reloj" class="card bg-primary text-white">
-                    <h3 class="card-title text-center">
-                    <div class="d-flex flex-wrap justify-content-center mt-2">
-                    <a><span class="badge hours"></span></a>
-                    <a><span class="dots">:</span></a>
-                    <a><span class="badge min"></span></a> 
-                    <!-- Si queremos segundero -->
-                    <!-- :<a><span class="badge sec"></span></a> -->
-                    </div>
-                    </h3>
-                    </div>
-                </div>
-                </div>
-                <br/>
-                
-            </header>
-            <hr><br/>
-            <div class="container d-flex justify-content-center">
-                <div class="col-lg-9">
-                    <div class="card">
-                        <div class="card-body">
-                            <h3 class="card-title text-center">
-                                <span class="fa fa-user"></span> Conectado como 
-                                <span style="color: #ea2942;"><%= user.local.email %></span><br/>
-                            </h3><hr/><br/>   
-                            <div class="text-center">
-                                <input type='submit' class="btn btn-outline-success btn-lg" value="&#xf061 Fichar entrada" id='entrar'>
-                                <input type='submit' class="btn btn-outline-danger btn-lg"  value="&#xf060 Fichar salida" id='salida'>                                          
-                            </div><br/>
-                        </div>
+                        <h3 class="card-title text-center">
+                            <div class="d-flex flex-wrap justify-content-center mt-2">
+                                <a><span class="badge hours"></span></a>
+                                <a><span class="dots">:</span></a>
+                                <a><span class="badge min"></span></a>
+                                <!-- Si queremos segundero -->
+                                <!-- :<a><span class="badge sec"></span></a> -->
+                            </div>
+                        </h3>
                     </div>
                 </div>
-               
             </div>
-            
+            <br />
+
+        </header>
+        <hr><br />
+        <div class="container d-flex justify-content-center">
+            <div class="col-lg-9">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title text-center">
+                            <span class="fa fa-user"></span> Conectado como
+                            <span style="color: #ea2942;"><%= user.local.email %></span><br />
+                        </h3>
+                        <hr /><br />
+                        <div class="text-center">
+                            <input type='submit' class="btn btn-outline-success btn-lg" value="&#xf061 Fichar entrada"
+                                id='entrar'>
+                            <input type='submit' class="btn btn-outline-danger btn-lg" value="&#xf060 Fichar salida"
+                                id='salida'>
+                        </div><br />
+                    </div>
+                </div>
+            </div>
+
         </div>
-        <%for(let val of user.local.fichajes){
+
+    </div>
+    <%for(let val of user.local.fichajes){
             var ultima = val.fichaje.Tipo;
         }%>
-        <div id='lastFichaje' hidden><%=ultima%></div>
-        <script>
-           
-            const botonEntrada = document.getElementById('entrar');
-            const botonSalida = document.getElementById('salida');
+    <div id='lastFichaje' hidden><%=ultima%></div>
+    <script>
+        const botonEntrada = document.getElementById('entrar');
+        const botonSalida = document.getElementById('salida');
 
-            botonEntrada.addEventListener('click',function(e){
-                console.log('Se ha pulsado Entrada');
-                habilitar();
-                fetch('/fichajeE',{method: 'POST'})
-                .then(function(res){
-                    if(res.ok){
+        botonEntrada.addEventListener('click', function (e) {
+            console.log('Se ha pulsado Entrada');
+            habilitar();
+            fetch('/fichajeE', {
+                    method: 'POST'
+                })
+                .then(function (res) {
+                    if (res.ok) {
                         console.log('El envio se ha realizado correctamente');
-                    }else{
+                    } else {
                         console.log('Request failed');
                     }
                 });
-            });
-            botonSalida.addEventListener('click',function(e){
-                console.log('Se ha pulsado Salida');
-                habilitar();
-                fetch('/fichajeS',{method: 'POST'})
-                .then(function(res){
-                    if(res.ok){
+        });
+        botonSalida.addEventListener('click', function (e) {
+            console.log('Se ha pulsado Salida');
+            habilitar();
+            fetch('/fichajeS', {
+                    method: 'POST'
+                })
+                .then(function (res) {
+                    if (res.ok) {
                         console.log('El envio se ha realizado correctamente');
-                    }else{
+                    } else {
                         console.log('Request failed');
                     }
                 });
-            });
-            //para la version final del control de entrada/salida:
-            //1.    Revisar el tipo del ultimo fichaje del usuario
-            //2.    Si es tipo entrada, deshabilitar el botonEntrada
-            //3.    Si el tipo salida, deshabilitar el botonSalida
-        
-    
-            // function deshabilitar(){
-            //     if(botonSalida.hidden == true){
-            //         botonSalida.hidden = false;
-            //         botonEntrada.hidden = true;
-            //    }else{
-            //        botonSalida.hidden = false;
-            //        botonEntrada.hidden = true;
-            //    }
-            //    alert('se ha fichado con exito');
-            // }   
+        });
+        //para la version final del control de entrada/salida:
+        //1.    Revisar el tipo del ultimo fichaje del usuario
+        //2.    Si es tipo entrada, deshabilitar el botonEntrada
+        //3.    Si el tipo salida, deshabilitar el botonSalida
 
-            function habilitar(){
-                if(botonEntrada.hidden == true){
-                    botonSalida.hidden = true;
-                    botonEntrada.hidden = false;
-                }else{
-                    botonSalida.hidden = false;
-                    botonEntrada.hidden = true;
-                }
-                alert('Se ha fichado con éxito');
+
+        // function deshabilitar(){
+        //     if(botonSalida.hidden == true){
+        //         botonSalida.hidden = false;
+        //         botonEntrada.hidden = true;
+        //    }else{
+        //        botonSalida.hidden = false;
+        //        botonEntrada.hidden = true;
+        //    }
+        //    alert('se ha fichado con exito');
+        // }   
+
+        function habilitar() {
+            if (botonEntrada.hidden == true) {
+                botonSalida.hidden = true;
+                botonEntrada.hidden = false;
+            } else {
+                botonSalida.hidden = false;
+                botonEntrada.hidden = true;
             }
+            alert('Se ha fichado con éxito');
+        }
+    </script>
+</body>
 
-          
-        </script>
-    </body>
 </html>

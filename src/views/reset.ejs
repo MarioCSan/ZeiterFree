@@ -1,41 +1,54 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>Recuperación de Clave de Acceso - 2</title>
-        <%- include ('partials/head'); %>
 
-    </head>
-    <body class="reset">
-        <div class="container">
-            <div class="col-sm-12 mx-auto">
-                <div class="card mt-5">
-                    <div class="card-body">
-                        <h1 class="text-center">
-                            <span class="fa fa-unlock"></span> Reinicio de su clave de acceso
-                        </h1>
-              
-                        
-                        <br/>
-                        <form action="" method="post">
-                            <div class="form-group">
-                                <label for="newpassword">Indique una nueva contraseña:</label>
-                                <input type="password" name="newpassword" class="form-control autofocus" placeholder="Nueva contraseña"><br/>
-                                <label for="confpassword">Confirme la nueva contraseña:</label>
-                                <input type="password" name="confpassword" class="form-control autofocus" placeholder="Repita contraseña">
-                            </div>
-                            
-                            <input type="submit" class="btn btn-success btn-lg" value="&#xf040 Cambiar contraseña">
-                        </form>
+<head>
+    <!--
+    Madrid 2020
+    Repositorio del proyecto: https://github.com/DrunkPsyduck/ZeiterFree/
+    Desarrollado por:
+    Adrián Marina Viera: https://github.com/Amarvie
+    Sergio Tejera de la Torre: 
+    Mario Canales Sánchez: https://github.com/DrunkPsyduck
+ -->
+    <meta charset="utf-8">
+    <title>Recuperación de Clave de Acceso - 2</title>
+    <%- include ('partials/head'); %>
 
-                        <hr>
-                        <div class="text-center">
-                            <p>Volver a <a href="/">Inicio</a>.</p>
+</head>
+
+<body class="reset">
+    <div class="container">
+        <div class="col-sm-12 mx-auto">
+            <div class="card mt-5">
+                <div class="card-body">
+                    <h1 class="text-center">
+                        <span class="fa fa-unlock"></span> Reinicio de su clave de acceso
+                    </h1>
+
+
+                    <br />
+                    <form action="" method="post">
+                        <div class="form-group">
+                            <label for="newpassword">Indique una nueva contraseña:</label>
+                            <input type="password" name="newpassword" class="form-control autofocus"
+                                placeholder="Nueva contraseña"><br />
+                            <label for="confpassword">Confirme la nueva contraseña:</label>
+                            <input type="password" name="confpassword" class="form-control autofocus"
+                                placeholder="Repita contraseña">
                         </div>
+
+                        <input type="submit" class="btn btn-success btn-lg" value="&#xf040 Cambiar contraseña">
+                    </form>
+
+                    <hr>
+                    <div class="text-center">
+                        <p>Volver a <a href="/">Inicio</a>.</p>
                     </div>
                 </div>
             </div>
         </div>
-        
-    </body>
+    </div>
+
+</body>
+
 </html>
