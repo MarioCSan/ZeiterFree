@@ -6,6 +6,6 @@ Esta aplicación esta desarrollada utilizando NodeJS y Express utilizando una ba
 
 ##Autoria
 Desarrollado por:
-    [Adrián Marina Viera]: https://github.com/Amarvie
-    Sergio Tejera de la Torre: 
-    Mario Canales Sánchez: https://github.com/DrunkPsyduck
+    [Adrián Marina Viera](https://github.com/Amarvie)  
+    Sergio Tejera de la Torre:   
+    [Mario Canales Sánchez](https://github.com/DrunkPsyduck)  
