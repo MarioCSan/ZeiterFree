@@ -1,3 +1,12 @@
+/*
+    Madrid 2020
+    Repositorio del proyecto: https://github.com/DrunkPsyduck/ZeiterFree/
+    Desarrollado por:
+    Adrián Marina Viera: https://github.com/Amarvie
+    Sergio Tejera de la Torre: 
+    Mario Canales Sánchez: https://github.com/DrunkPsyduck
+
+*/
 const User = require('../app/models/user');
 const Fichaje = require('../app/models/fichar');
 const bcrypt = require('bcrypt-nodejs');
@@ -88,7 +97,7 @@ module.exports = (app, passport) => {
 
         if (newPassword === '' && confirmPassword === '') {
             console.log('campos vacios')
-            req.flash('message', 'Las contraseñas no pueden estar vacías');
+            req.flash('message', 'Los campos no pueden estar vacíos');
             res.redirect('/update');
         } else if (newPassword === confirmPassword) {
             //Se encripta newPassword
@@ -284,7 +293,7 @@ module.exports = (app, passport) => {
                 console.log(err);
             } else if (result != null) {
                 console.log(result)
-                req.flash('message', 'Cuenta eliminada')
+                req.flash('message', 'Cuenta eliminada definitivamente')
                 res.redirect('/');
             }
         })
@@ -302,14 +311,7 @@ module.exports = (app, passport) => {
             }, function (err, user) {
                 var rawData = JSON.stringify(user);
                 var json = JSON.parse(rawData);
-
-                console.log(typeof (json))
-                console.log(json)
-                let csv
                 try {
-                    //  csv = json2csv.parse(User, {
-                    //      fields
-                    //  });
                     const fields = ['local.fichajes.fichaje.Tipo', 'local.fichajes.fichaje.Fecha', 'local.fichajes.fichaje.Hora'];
                     const transforms = [unwind({
                         paths: ['local.fichajes', 'local.fichajes.fichaje']
@@ -318,22 +320,18 @@ module.exports = (app, passport) => {
                         fields,
                         transforms
                     });
-
                     csv = json2csvParser.parse(json)
-
                 } catch (err) {
                     console.log(csv)
                 }
 
                 fs.writeFile(req.user.email + '.csv', csv, function (err) {
                     if (err) throw err;
-                    var file = req.user.local.email + '.csv';
-                    res.setHeader('Content-disposition', 'attachment; filename=' + file);
+                    
+                    res.setHeader('Content-disposition','attachment; filename=' + req.user.local.email + '.csv');
                     res.set('Content-Type', 'text/csv');
-                    res.attachment(file);
-                    res.status(200).send(csv);
-                    console.log(csv)
-
+                    //res.attachment(file);
+                    res.send(csv);
                 });
 
             })

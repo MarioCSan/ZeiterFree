@@ -1,11 +1,17 @@
 <!DOCTYPE html>
 <html>
-
+<!--
+    Madrid 2020
+    Repositorio del proyecto: https://github.com/DrunkPsyduck/ZeiterFree/
+    Desarrollado por:
+    Adrián Marina Viera: https://github.com/Amarvie
+    Sergio Tejera de la Torre: 
+    Mario Canales Sánchez: https://github.com/DrunkPsyduck
+ -->
 <head>
     <meta charset="utf-8">
     <title>Consulta</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <%- include ('partials/head'); %>
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
         integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
@@ -13,6 +19,9 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
         integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous">
     </script>
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
     <%- include ('partials/head'); %>
     <%- include ('partials/navbar'); %>
 
@@ -21,24 +30,60 @@
 
 </head>
 
-<body>
-
-    <div class="container">
+<body class="consultas">
+<script>
+        var idioma={
+            "sProcessing":     "Procesando...",
+            "sLengthMenu":     "",
+            "sZeroRecords":    "No se encontraron resultados",
+            "sEmptyTable":     "Ningún dato disponible en esta tabla",
+            "sInfo":           "",
+            "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+            "sInfoFiltered":   "(Coincidencias en todos los registros)",
+            "sInfoPostFix":    "",
+            "sSearch":         "Buscar coincidencias con:",
+            "sUrl":            "",
+            "sInfoThousands":  ",",
+            "sLoadingRecords": "Cargando...",
+            "oPaginate": {
+                "sFirst":    "Primero",
+                "sLast":     "Último",
+                "sNext":     "Siguiente",
+                "sPrevious": "Anterior"
+            },
+            "oAria": {
+                "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+            },
+            "buttons": {
+                "copy": "Copiar",
+                "colvis": "Visibilidad"
+            }
+        }
+    $(document).ready(function () {
+        $('#listaFichajes').dataTable({
+            "language": idioma,
+            "pageLength":8,
+        }
+        );
+    });
+</script>
+    <div class="container justify-content-center" style="width: 100%;">
         <header class="text-center">
             <br />
             <h1><strong>ZEITER VIRTUAL FREE</strong></h1>
         </header>
-        <hr>
-        <div class="container d-flex justify-content-center">
-            <div class="col-sm-7">
-                <div class="card">
-                    <div class="card-body">
-                        <h3>Sus fichajes</h3>
-                        <table style="background-color: silver;" class="table table-striped table-bordered text-center">
+        <hr><br/>
+            
+                <div class="text-center" style="background-color: white; width: 100%; padding-left: 0.5cm; padding-top: 1cm; padding-right: 0.5cm;">
+                   
+                    <span class="fa fa-2x fa-bar-chart" style="color: #ea2942;"></span><span style="font-size: x-large; color: black;"> Historial de fichajes:</span>
+                    <br/><br/>
+                        <table id="listaFichajes" style="background-color: silver;" class="table table-striped table-bordered text-center">
                             <thead>
-                                <th>Tipo</th>
-                                <th>Fecha</th>
-                                <th>Hora</th>
+                                <th><span class="fa fa-exchange"></span><span style="color: #ea2942;"> Tipo</span></th>
+                                <th><span class="fa fa-calendar"></span><span style="color: #ea2942;"> Fecha</span></th>
+                                <th><span class="fa fa-clock-o"></span><span style="color: #ea2942;"> Hora</span></th>
                             </thead>
                             <tbody>
                                 <% for(let val of user.local.fichajes){%>
@@ -52,10 +97,10 @@
                             </tbody>
                         </table>
                     </div>
-                </div>
-            </div>
+                
+            
 
-        </div>
+       
 
     </div>
 </body>

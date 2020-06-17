@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema({
         //Campos para reinicio de clave
         resetPasswordToken: String,
         resetPasswordExpires: Date,
+        //Array con los fichajes del usuario
        fichajes: [{
            fichaje: {
                Tipo: String,
@@ -16,6 +17,7 @@ const userSchema = new mongoose.Schema({
            }
        }]
     },
+    // esquemas para otros tipos de login a traves de cuentas de RRSS (op)
     facebook: {
         email: String,
         password: String,
@@ -36,13 +38,6 @@ const userSchema = new mongoose.Schema({
     },
 });
 
-// const fichajeSchema = new mongoose.Schema({
-//     fichaje: {
-//         Tipo: String,
-//         Fecha: String,
-//         Hora: Number,
-//     }
-// });
 
 //encripta la contraseña para almacenarla
 userSchema.methods.generateHash = function (password) {

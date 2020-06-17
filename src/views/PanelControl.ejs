@@ -1,5 +1,13 @@
 <!DOCTYPE html>
 <html>
+<!--
+    Madrid 2020
+    Repositorio del proyecto: https://github.com/DrunkPsyduck/ZeiterFree/
+    Desarrollado por:
+    Adrián Marina Viera: https://github.com/Amarvie
+    Sergio Tejera de la Torre: 
+    Mario Canales Sánchez: https://github.com/DrunkPsyduck
+ -->
 
 <head>
     <meta charset="utf-8">
@@ -79,46 +87,33 @@
     });
 </script>
 
-<body class="profile">
+<body class="control">
     <div class="container">
         <header class="text-center">
             <br />
             <h1><strong>ZEITER VIRTUAL FREE</strong></h1>
-            <br />
-            <!-- Contenedor html del reloj-->
-            <div class="container d-flex justify-content-center">
-                <div class="col-md-3">
-                    <div id="reloj" class="card bg-primary text-white">
-                        <h3 class="card-title text-center">
-                            <div class="d-flex flex-wrap justify-content-center mt-2">
-                                <a><span class="badge hours"></span></a>
-                                <a><span class="dots">:</span></a>
-                                <a><span class="badge min"></span></a>
-                                <!-- Si queremos segundero -->
-                                <!-- :<a><span class="badge sec"></span></a> -->
-                            </div>
-                        </h3>
-                    </div>
-                </div>
-            </div>
-            <br />
+
+
 
         </header>
-        <hr>
+        <hr><br />
         <div class="container d-flex justify-content-center">
-            <div class="col-sm-7">
+            <div class="col-lg-9">
                 <div class="card">
                     <div class="card-body">
-                        <h3 class="card-title">
+                        <h3 class="card-title text-center">
                             <span class="fa fa-user"></span> Conectado como
                             <span style="color: #ea2942;"><%= user.local.email %></span><br />
                         </h3>
-                        <hr />
-                        <div class="text-center">
-                            <a href='/update' class="btn btn-outline-success btn-lg">Cambiar contraseña</a>
-                            <a href='/delete' class="btn btn-outline-success btn-lg">Borrar cuenta</a>
-                            
-                        </div>
+                        <hr /><br />
+                        <div class="d-flex justify-content-around">
+                            <a href='/update' class="btn btn-outline-secondary btn-lg"><span class="fa fa-cog"></span>
+                                Cambiar contraseña</a>
+
+                            <a href='/delete' class="btn btn-outline-warning btn-lg"><span
+                                    class="fa fa-file-text-o"></span> Borrar cuenta / Descargar datos</a>
+
+                        </div><br />
                     </div>
                 </div>
             </div>

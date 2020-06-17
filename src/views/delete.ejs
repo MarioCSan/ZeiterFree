@@ -1,5 +1,13 @@
 <!DOCTYPE html>
 <html>
+<!--
+    Madrid 2020
+    Repositorio del proyecto: https://github.com/DrunkPsyduck/ZeiterFree/
+    Desarrollado por:
+    Adrián Marina Viera: https://github.com/Amarvie
+    Sergio Tejera de la Torre: 
+    Mario Canales Sánchez: https://github.com/DrunkPsyduck
+ -->
 
 <head>
     <meta charset="utf-8">
@@ -28,12 +36,12 @@
             <div class="col-sm-7">
                 <div class="card">
                     <div class="card-body">
-                        <h3 class="card-title">
-                            <span class="fa fa-user">
-                                Eliminar su cuenta
+                        <h3 class="card-title text-center">
+                            <span class="fa fa-exclamation-triangle" style="color: #ea2942;"></span>
+                            Eliminar la cuenta <span style="color: #ea2942;"><%= user.local.email %></span>
                             </span> </h3>
                         <div class="alert alert-danger">
-                            Si borra su cuenta no se podrá recuperar la información
+                            Si elimina su cuenta ya no podrá recuperar la información mas adelante
                         </div>
 
                         <% if (message && message.length > 0) { %>
@@ -41,26 +49,32 @@
                             <%= message %>
                         </div>
                         <% } %>
-                        <p>Le informamos que para borrar su cuenta debe descargar un fichero con sus datos. Por motivos
-                            legales debe conservar este archivo X años</p>
+                        <p>Le informamos que para eliminar su cuenta debe descargar un fichero con sus datos personales.
+                            Por motivos
+                            legales debe conservar este archivo <span
+                                style="color: #ea2942; font-weight: bold;">4</span> años.</p>
 
                         <form action="/descarga" method="post">
                             <div class="form-group">
-                                <label for="email">Introduzca su email para descargar el fichero, luego podrá borrar su
-                                    cuenta</label>
+                                <label for="email">Introduzca su email para descargar el fichero, después podrá borrar
+                                    su
+                                    cuenta.</label>
                                 <input type="email" id="email" name="email" class="form-control" required=''
                                     oninvalid="this.setCustomValidity('Introduzca un email válido')" required=""
-                                    oninput="setCustomValidity('')">
-                            </div>
-                            <button class='btn btn-warning btm-xs' type="submit" onclick='borrar()'>Descargar</button>
-                        </form>
+                                    oninput="setCustomValidity('')" placeholder="Introduzca su e-mail">
+                            </div><br />
+                            <button class='btn btn-outline-success btn-lg' type="submit" onclick='borrar()'><span
+                                    class="fa fa-download"> Descargar datos personales a su ordenador</span></button>
+                        </form><br />
                         <form action='/delete' method='post'>
                             <input type='hidden' value='' id='emailHidden' name='emailHidden'>
-                            <input id='delete' type='submit' class="btn btn-danger btn-xs" value='Borrar'>
+                            <input id='delete' type='submit' class="btn btn-danger btn-lg"
+                                value='&#xf2d4 Eliminar datos de su cuenta definitivamente'>
 
                         </form>
                     </div>
-                    <a href='/panel' class='btn btn-secondary btn-xs'>Volver atras</a>
+                    <a href='/panel' class='btn btn-outline-danger btn-lg'><span class="fa fa-arrow-left"></span>
+                        Cancelar</a>
                 </div>
             </div>
         </div>

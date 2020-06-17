@@ -1,50 +1,60 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>Registro Node</title>
-        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-        
-        <link rel="stylesheet" href="/css/main.css">
-    </head>
-    <body class="signup">
-        <div class="container">
-            <div class="col-sm-6 mx-auto">
-                <div class="card mt-5">
-                    <div class="card-body">
-                        <h1 class="text-center">
-                            <span class="fa fa-sign-in"></span> Registro
-                        </h1>
-                        
-                        <% if (message.length > 0) { %>
-                        <div class="alert alert-danger">
-                            <%= message %>
-                        </div>
-                        <% } %>
 
-                        <form action="/signup" method="post">
-                            <div class="form-group">
-                                <label for="email">Correo electrónico:</label>
-                                <input type="email" name="email" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="password">Contraseña:</label>
-                                <input type="password" name="password" class="form-control">
-                            </div>
-                            <input type="submit" class="btn btn-danger btn-lg" value="Enviar">
-                        </form>
+<head>
+    <!--
+    Madrid 2020
+    Repositorio del proyecto: https://github.com/DrunkPsyduck/ZeiterFree/
+    Desarrollado por:
+    Adrián Marina Viera: https://github.com/Amarvie
+    Sergio Tejera de la Torre: 
+    Mario Canales Sánchez: https://github.com/DrunkPsyduck
+ -->
+    <meta charset="utf-8">
+    <title>Registro Node</title>
+    <%- include ('partials/head'); %>
 
-                        <hr>
-                        <div class="text-center">
-                            <p>¿Tienes ya una cuenta? <a href="/login">Acceder</a>.</p>
-                            <p>Volver a <a href="/">Inicio</a>.</p>
+</head>
+
+<body class="signup">
+    <div class="container">
+        <div class="col-sm-6 mx-auto">
+            <div class="card mt-5">
+                <div class="card-body">
+                    <h1 class="text-center">
+                        <span class="fa fa-id-card-o"></span> Registro
+                    </h1>
+
+                    <% if (message.length > 0) { %>
+                    <div class="alert alert-danger">
+                        <%= message %>
+                    </div>
+                    <% } %>
+
+                    <form action="/signup" method="post">
+                        <div class="form-group">
+                            <label for="email">Correo electrónico:</label>
+                            <input type="email" name="email" class="form-control"
+                                placeholder="Indica tu dirección de correo">
                         </div>
+                        <div class="form-group">
+                            <label for="password">Contraseña:</label>
+                            <input type="password" name="password" class="form-control"
+                                placeholder="Indica una contraseña">
+                        </div>
+                        <input type="submit" class="btn btn-info btn-lg" value="&#xf087 Registrarse">
+                    </form>
+
+                    <hr>
+                    <div class="text-center">
+                        <p>¿Tienes ya una cuenta? <a href="/login">Acceder</a>.</p>
+                        <p>Volver a <a href="/">Inicio</a>.</p>
                     </div>
                 </div>
             </div>
         </div>
-        
-    </body>
+    </div>
+
+</body>
+
 </html>

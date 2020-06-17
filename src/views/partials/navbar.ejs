@@ -1,17 +1,18 @@
+<%- include ('head'); %>
 <nav class="navbar navbar-expand-md navbar-light bg-light">
-  <a class="navbar-brand" href="#"><strong>PYV</strong></a>
+  <a class="navbar-brand" href="/profile"><strong>Zeiter Free</strong></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
   </button>
   <div class="navbar-collapse collapse" id="collapsingNavbar">
       <ul class="navbar-nav">
-            <a href="/profile" class="btn btn-outline-secondary boton">Página de fichaje</a>
-            <a href="/panel" class="btn btn-outline-secondary boton">Panel de control</a>
-            <a href="/consulta" class="btn btn-outline-secondary boton">Consulta de fichajes</a>
-            <a href="https://pyvtec.com/" class="btn btn-outline-secondary boton" target="_blank">Acerca de nosotros</a>
+            <a href="/profile" class="btn btn-outline-secondary boton"><span class="fa fa-list-ul"></span> Panel de fichajes</a>
+            <a href="/panel" class="btn btn-outline-secondary boton"><span class="fa fa-cog"></span> Panel de control</a>
+            <a href="/consulta" class="btn btn-outline-secondary boton"><span class="fa fa-bar-chart"></span> Historial de fichajes</a>
+            <a href="https://pyvtec.com/" class="btn btn-outline-secondary boton" target="_blank"><span class="fa fa-info-circle"></span> Visita nuestra web</a>
       </ul>
       <ul class="navbar-nav ml-auto">
-            <a href="/logout" class="btn btn-outline-danger">Cerrar Sesión</a>
+            <a href="/logout" class="btn btn-outline-danger"><span class="fa fa-sign-out"></span> Cerrar Sesión</a>
       </ul>
   </div>
 </nav>

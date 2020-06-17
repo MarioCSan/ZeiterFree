@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html>
-
+<!--
+    Madrid 2020
+    Repositorio del proyecto: https://github.com/DrunkPsyduck/ZeiterFree/
+    Desarrollado por:
+    Adrián Marina Viera: https://github.com/Amarvie
+    Sergio Tejera de la Torre: 
+    Mario Canales Sánchez: https://github.com/DrunkPsyduck
+ -->
 <head>
     <meta charset="utf-8">
     <title>Página de perfil de usuario</title>
@@ -34,29 +41,31 @@
                             <%= message %>
                         </div>
                         <% } %>
-                        <h3 class="card-title">
-                            <span class="fa fa-user"></span> Conectado como
-                            <span style="color: #ea2942;"><%= user.local.email %></span><br />
+                        <h3 class="card-title text-center">
+                            <span class="fa fa-user"></span> Conectado como 
+                            <span style="color: #ea2942;"><%= user.local.email %></span></h3>
+                            
 
                             <form action="/update" method="post" onsubmit="return validar()">
-
+                                <br/>
                                 <!-- Nueva contraseña -->
                                 <div class="form-group">
-                                    <label for="password">nueva contraseña:</label>
-                                    <input type="password" id='newPassword' name="newPassword" class="form-control">
+                                    <label for="password">Nueva contraseña:</label>
+                                    <input type="password" id='newPassword' name="newPassword" class="form-control" placeholder="Nueva contraseña">
                                 </div>
 
                                 <!-- confirmar contraseña -->
                                 <div class="form-group">
-                                    <label for="password">Confirma la contraseña:</label>
-                                    <input type="password" id="confirmPassword" name="confirmPassword"
-                                        class="form-control">
+                                    <label for="password">Confirme la contraseña:</label>
+                                    <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" placeholder="Confirme la contraseña">
                                 </div>
-                                <input type="submit" class="btn btn-warning btn-xs" value="actualizar">
-                                <!-- <a href='/profile' class='btn btn-info btn-xs'>Volver atras</a> -->
-                            </form>
+                                
+                                <br/>
+                                <input type="submit" class="btn btn-outline-success btn-lg" value="&#xf040 Modificar su contraseña">
+                            </form><br/>
                     </div>
-                    <a href='/panel' class='btn btn-secondary btn-xs'>Volver atras</a>
+                    <br/>
+                    <a href='/panel' class='btn btn-outline-danger btn-lg'><span class="fa fa-arrow-left"></span> Cancelar</a>
                 </div>
             </div>
         </div>

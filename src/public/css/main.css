@@ -24,6 +24,18 @@
     background: linear-gradient(to right, #c1c4c7, #c1c4c7); /*W3C, IE10+, Edge, Firefox */
 }
 
+.control {
+    background: #c1c4c7; /* navegadores clásicos */
+    background: -webkit-linear-gradient(to right, #c1c4c7, #c1c4c7); /* Chrome, Safari */
+    background: linear-gradient(to right, #c1c4c7, #c1c4c7); /*W3C, IE10+, Edge, Firefox */
+}
+
+.consultas {
+    background: #c1c4c7; /* navegadores clásicos */
+    background: -webkit-linear-gradient(to right, #c1c4c7, #c1c4c7); /* Chrome, Safari */
+    background: linear-gradient(to right, #c1c4c7, #c1c4c7); /*W3C, IE10+, Edge, Firefox */
+}
+
 #reloj {
     background: #ea2942; /* navegadores clásicos */
     background: -webkit-linear-gradient(to right, #ea2942, #ea2942); /* Chrome, Safari */
@@ -43,6 +55,11 @@
     background-color: #c1c4c7 !important;
 }
 
+/* .btn-outline-danger:hover {
+    background-color: #ea2942 !important;
+} */
+
+
 
 .forgot {
     background: #ea2942; /* navegadores clásicos */
@@ -56,9 +73,10 @@
     background: linear-gradient(to right, #aeb6ff, #363d7a); /*W3C, IE10+, Edge, Firefox */
 }
 
-body{
-    background: #C9D6FF;
-    background: -webkit-linear-gradient(to right, #E2E2E2, #C9D6FF);
-    background: linear-gradient(to right, #E2E2E2, #C9D6FF);
-    }
-    h3,a{font-family: 'alarm clock';}
+th {
+    background-color: #c1c4c7;
+}
+
+input[type="submit"] {
+    font-family: FontAwesome;
+}

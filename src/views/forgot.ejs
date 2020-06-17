@@ -1,44 +1,56 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>Recuperación de Clave de Acceso - 1</title>
-        <%- include ('partials/head'); %>
+<!--
+    Madrid 2020
+    Repositorio del proyecto: https://github.com/DrunkPsyduck/ZeiterFree/
+    Desarrollado por:
+    Adrián Marina Viera: https://github.com/Amarvie
+    Sergio Tejera de la Torre: 
+    Mario Canales Sánchez: https://github.com/DrunkPsyduck
+ -->
 
-    </head>
-    <body class="forgot">
-        <div class="container">
-            <div class="col-sm-12 mx-auto">
-                <div class="card mt-5">
-                    <div class="card-body">
-                        <h1 class="text-center">
-                            <span class="fa fa-lock"></span> Recupere su clave de acceso
-                        </h1>
-                   
-                        <% if (message.length > 0) { %>
-                            <div class="alert alert-danger">
-                                <%= message %>
-                            </div>
-                            <% } %>
-                            
-                        <br/>
-                        <form action="/forgot" method="post">
-                            <div class="form-group">
-                                <label for="email">Indique su dirección de correo electrónico:</label>
-                                <input type="email" name="email" class="form-control">
-                            </div>
-                            
-                            <input type="submit" class="btn btn-success btn-lg" value="Enviar correo">
-                        </form>
+<head>
+    <meta charset="utf-8">
+    <title>Recuperación de Clave de Acceso - 1</title>
+    <%- include ('partials/head'); %>
 
-                        <hr>
-                        <div class="text-center">
-                            <p>Volver a <a href="/">Inicio</a>.</p>
+</head>
+
+<body class="forgot">
+    <div class="container">
+        <div class="col-sm-12 mx-auto">
+            <div class="card mt-5">
+                <div class="card-body">
+                    <h1 class="text-center">
+                        <span class="fa fa-lock"></span> Recupere su clave de acceso
+                    </h1>
+
+                    <% if (message.length > 0) { %>
+                    <div class="alert alert-danger">
+                        <%= message %>
+                    </div>
+                    <% } %>
+
+                    <br />
+                    <form action="/forgot" method="post">
+                        <div class="form-group">
+                            <label for="email">Dirección de correo electrónico:</label>
+                            <input type="email" name="email" class="form-control"
+                                placeholder="Indica tu dirección de correo para recibir instrucciones">
                         </div>
+
+                        <input type="submit" class="btn btn-info btn-lg" value="&#xf064 Enviar correo">
+                    </form>
+
+                    <hr>
+                    <div class="text-center">
+                        <p>Volver a <a href="/">Inicio</a>.</p>
                     </div>
                 </div>
             </div>
         </div>
-        
-    </body>
+    </div>
+
+</body>
+
 </html>
