@@ -23,12 +23,7 @@ const fs = require('fs');
 const async = require('async');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
-/*
-Este fichero es largo, pero no te asustes, existen comentarios para ayudarte.
-Cada ruta incluye su algoritmo dentro, por ello es un fichero largo.
-En futuras versiones se debe adelgazar el código aquí presente y utilizar funciones externas. Por falta de tiempo no pudo hacerse y se quedo así.
-Buena suerte 
-*/
+
 module.exports = (app, passport) => {
     app.use(function (req, res, next) {
         res.locals.message = req.flash('message');
@@ -162,9 +157,6 @@ module.exports = (app, passport) => {
                 function (token, user, done) {
                     var smtpTransport = nodemailer.createTransport( /*'SMTP'*/ {
                         service: 'SendGrid',
-                        // host: ,
-                        // port: 25,
-                        // secure: false,
                         auth: {
                             user: 'noReplyZeiterFree',
                             pass: 'Zeiterfree0'
@@ -284,7 +276,6 @@ module.exports = (app, passport) => {
         });
     });
     app.post("/delete", isLoggedIn, (req, res) => {
-        // Aqui ira el metodo de borrado del usuario. Se necesita introducir el email correctamente
         var email = req.body.emailHidden;
         User.findOneAndDelete({
             'local.email': email
@@ -301,7 +292,7 @@ module.exports = (app, passport) => {
 
 
     app.post("/descarga", isLoggedIn, (req, res) => {
-        // Se genera un documento csv con json2csv y que se descargara. La llamada a este metodo solo se hará en la descarga en el momento de borrar
+        // Se genera un documento csv. La llamada a este metodo solo se hará en la descarga en el momento de borrar
         var email = req.body.email;
 
         if (email != '' && email === req.user.local.email) {
@@ -330,7 +321,6 @@ module.exports = (app, passport) => {
                     
                     res.setHeader('Content-disposition','attachment; filename=' + req.user.local.email + '.csv');
                     res.set('Content-Type', 'text/csv');
-                    //res.attachment(file);
                     res.send(csv);
                 });
 
@@ -431,7 +421,6 @@ module.exports = (app, passport) => {
     });
 
     function encriptado(password) {
-        //encripta la contraseña introducida con un bcrypt de 8 vueltas
         return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
     }
 
