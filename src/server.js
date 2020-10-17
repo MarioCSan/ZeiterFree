@@ -55,11 +55,7 @@ require('./app/routes')(app, passport);
 //static files
 app.use(express.static(path.join(__dirname, 'public')));
 
-// app.listen(app.get('port'), () => {
-//     console.log('server on port', app.get('port'));
-// });
 
-//const server = app.listen();
 const server = app.listen(app.get('port'), () => {
     console.log('Servidor escuchando en puerto: ', app.get('port'));
 });
@@ -71,5 +67,4 @@ io.sockets.on('connection', function (socket) {
     socket.emit('datetime', {
         datetime: new Date().getTime()
     });
-    //console.log('socket conectado');
 });
